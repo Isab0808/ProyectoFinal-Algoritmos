@@ -18,7 +18,7 @@ public class Logica {
 	
 	public Logica (PApplet app) {
 		
-		estado = 0;
+		estado = 1;
 		
 		muro1 = app.loadImage("Muro1.jpg");	
 		muro2 = app.loadImage("Muro2.jpg");	
@@ -33,10 +33,10 @@ public class Logica {
 		pantalla[4] = app.loadImage("Instrucciones2.jpg");	
 
 		niveles = new PImage[4];
-		niveles[0] = app.loadImage("Nivel1.png");	
-		niveles[1] = app.loadImage("Nivel2.png");	
-		niveles[2] = app.loadImage("Nivel3.png");	
-		niveles[3] = app.loadImage("Nivel4.png");	
+		niveles[0] = app.loadImage("Nivel1.jpg");	
+		niveles[1] = app.loadImage("Nivel2.jpg");	
+		niveles[2] = app.loadImage("Nivel3.jpg");	
+		niveles[3] = app.loadImage("Nivel4.jpg");	
 
 		
 		
@@ -47,21 +47,65 @@ public class Logica {
 	switch (estado) {
 	
 	//Pantalla inicio
-	case 0: {
+	
+	case 0: 
 		app.image(pantalla [0],0,0);
 		
+		
+	break;
+	
+	//Pantalla Login
+	case 1: 
+		app.image(pantalla [1],0,0);
+			
+	break;		
+	
+	//Pantalla Registro
+	case 2: 
+		app.image(pantalla [2],0,0);
+		
+		
+	break;
+	
+	//Pantalla Instrucciones 1
+		case 3: 
+			app.image(pantalla [3],0,0);
+
+	break;
+	
+	//Pantalla Instrucciones 2
+	case 4: 
+	app.image(pantalla [4],0,0);
+								
+	break;
+	
+	//Pantalla nivel 1
+	case 5: 
+	app.image(niveles [0],0,0);
+									
+	break;
+	
+	//Pantalla nivel 2
+	case 6: 
+	app.image(niveles [1],0,0);
+									
+	break;
+	
+	//Pantalla nivel 3
+	case 7: 
+	app.image(niveles [2],0,0);
+									
+	break;
+	
+	//Pantalla nivel 4
+	case 8: 
+	app.image(niveles [3],0,0);
+									
+	break;
+		}	
+		
 	
 	}
-	
-	default:
-		
-	}	
-		
-	}
-	
-	
-	
-	
 	
 
 }//END
