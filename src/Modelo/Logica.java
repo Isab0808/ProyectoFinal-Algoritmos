@@ -13,6 +13,7 @@ public class Logica {
 	PImage muro2;
 	PImage muro3;
 	PImage muro4;
+	PImage muro5;
 	
 	Mapa mapa;
 
@@ -22,10 +23,11 @@ public class Logica {
 		
 		estado = 5;
 		
-		muro1 = app.loadImage("Muro1.jpg");	
-		muro2 = app.loadImage("Muro2.jpg");	
-		muro3 = app.loadImage("Muro3.jpg");	
-		muro4 = app.loadImage("Muro4.jpg");	
+		muro1 = app.loadImage("Muro1.png");	
+		muro2 = app.loadImage("Muro2.png");	
+		muro3 = app.loadImage("Muro3.png");	
+		muro4 = app.loadImage("Muro4.png");
+		muro5 = app.loadImage("Muro5.png");
 				
 		pantalla = new PImage[5];
 		pantalla[0] = app.loadImage("pantallainicio.jpg");	
@@ -86,7 +88,7 @@ public class Logica {
 	app.image(niveles [0],0,0);
 	
 		mapa = new Mapa();
-		mapa.pintar(app);
+		mapa.pintar(app, muro1, muro2, muro3, muro4, muro5);
 									
 	break;
 	

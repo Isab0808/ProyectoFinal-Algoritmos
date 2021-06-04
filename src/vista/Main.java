@@ -19,6 +19,9 @@ public class Main extends PApplet {
 		size(1200, 700);
 	}
 	
+	PImage[] pantalla;
+	PImage[] niveles;
+	
 	
 	/**PImage[] pantalla;
 	PImage[] niveles;

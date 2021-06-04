@@ -22,32 +22,39 @@ public class Mapa {
 	PImage muro4;
 	PImage muro5;
 	
+	Mapa myMuro1;
+	Mapa myMuro2;
+	Mapa myMuro3;
+	Mapa myMuro4;
+	Mapa myMuro5;
+	
+	
 	public Mapa() {
 		
-		mapa= new int[10][25];
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 25; j++) {
+		mapa= new int[12][24];
+		for (int i = 0; i < 12; i++) {
+			for (int j = 0; j < 24; j++) {
 				mapa [i][j]=0;
 			}
 		}
 		
-		mapa [2][2]= 0;
-		mapa [3][3]= 1;
-		mapa [4][4]= 0;
-		mapa [2][9]= 1;
-		mapa [2][8]= 0;
-		mapa [8][2]= 0;
-		mapa [8][3]= 0;
+		mapa [2][2]= 2;
+		mapa [3][3]= 5;
+		mapa [4][4]= 3;
+		mapa [2][9]= 2;
+		mapa [2][8]= 4;
+		mapa [8][2]= 5;
+		mapa [8][3]= 3;
 	
 		
 	}
 	
-	public void pintar (PApplet app) {
-		int x=7;
-		int y=100;
+	public void pintar (PApplet app, PImage muro1, PImage muro2, PImage muro3, PImage muro4, PImage muro5) {
+		int x=25;
+		int y=110;
 		
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 25; j++) {
+		for (int i = 0; i < 12; i++) {
+			for (int j = 0; j < 24; j++) {
 				
 				switch (mapa[i][j]) {
 				
@@ -91,8 +98,11 @@ public class Mapa {
 				x+=50;
 				
 				}
-				x=0;
+			if (x>1000) {
+				x=25;
 				y+=50;
+			}
+				
 			
 			}
 		}
