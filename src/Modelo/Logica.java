@@ -13,12 +13,14 @@ public class Logica {
 	PImage muro2;
 	PImage muro3;
 	PImage muro4;
+	
+	Mapa mapa;
 
 	
 	
 	public Logica (PApplet app) {
 		
-		estado = 1;
+		estado = 5;
 		
 		muro1 = app.loadImage("Muro1.jpg");	
 		muro2 = app.loadImage("Muro2.jpg");	
@@ -36,7 +38,7 @@ public class Logica {
 		niveles[0] = app.loadImage("Nivel1.jpg");	
 		niveles[1] = app.loadImage("Nivel2.jpg");	
 		niveles[2] = app.loadImage("Nivel3.jpg");	
-		niveles[3] = app.loadImage("Nivel4.jpg");	
+		niveles[3] = app.loadImage("Nivel4.jpg");
 
 		
 		
@@ -82,6 +84,9 @@ public class Logica {
 	//Pantalla nivel 1
 	case 5: 
 	app.image(niveles [0],0,0);
+	
+		mapa = new Mapa();
+		mapa.pintar(app);
 									
 	break;
 	

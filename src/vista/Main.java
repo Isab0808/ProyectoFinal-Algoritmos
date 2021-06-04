@@ -1,5 +1,6 @@
 package vista;
 import Controlador.Control;
+import Modelo.Mapa;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -18,6 +19,7 @@ public class Main extends PApplet {
 		size(1200, 700);
 	}
 	
+	
 	/**PImage[] pantalla;
 	PImage[] niveles;
 	
@@ -29,7 +31,7 @@ public class Main extends PApplet {
 
 		
 	public void setup() {
-	
+		
 		/**	
 	muro1 = loadImage("Muro1.jpg");	
 	muro2 = loadImage("Muro2.jpg");	
