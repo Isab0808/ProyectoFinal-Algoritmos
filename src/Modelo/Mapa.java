@@ -5,6 +5,7 @@ import java.util.Iterator;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
+import vista.Main;
 
 public class Mapa {
 	
@@ -14,7 +15,7 @@ public class Mapa {
 	
 	private Cafe cafe;
 	
-	Logica refLogica;
+Main refMain;
 	
 	PImage muro1;
 	PImage muro2;
@@ -45,6 +46,7 @@ public class Mapa {
 		mapa [2][8]= 4;
 		mapa [8][2]= 5;
 		mapa [8][3]= 3;
+		
 	
 		
 	}
@@ -70,7 +72,8 @@ public class Mapa {
 					break;
 					
 				case 2: 
-					app.image(muro2, x, y);
+					//app.image(muro2, x, y); 
+					app.fill(255);
 					break;
 					
 				case 3:
@@ -106,10 +109,16 @@ public class Mapa {
 			
 			}
 		}
-	
+	public int getTipoMapa (int fil,int col) {
+		if (col>=24 || fil>=12 ||col<0||fil<0) {
+			return 1;
+		} else {
+			return mapa[fil][col];
+		}
+	}
 	}
 	
-			//public int getTipoMapa () {
+		
 	
 	
 

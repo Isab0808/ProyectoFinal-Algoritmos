@@ -16,6 +16,7 @@ public class Logica {
 	PImage muro5;
 	
 	Mapa mapa;
+	Personaje personaje;
 
 	
 	
@@ -86,9 +87,13 @@ public class Logica {
 	//Pantalla nivel 1
 	case 5: 
 	app.image(niveles [0],0,0);
+
 	
 		mapa = new Mapa();
 		mapa.pintar(app, muro1, muro2, muro3, muro4, muro5);
+		
+		personaje=new Personaje(6, 5, mapa);
+		personaje.pintar(app, muro2, muro1);
 									
 	break;
 	
