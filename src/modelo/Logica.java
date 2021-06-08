@@ -12,6 +12,7 @@ public class Logica {
 	PImage[] pantalla;
 	PImage[] niveles;
 	PImage[] enemigo;
+	PImage[] adornoMatriz;
 
 	PImage muro1;
 	PImage muro2;
@@ -61,6 +62,13 @@ public class Logica {
 		enemigo[2] = app.loadImage("Enemigo3.png");
 		enemigo[3] = app.loadImage("Enemigo4.png");
 		
+		adornoMatriz = new PImage[5];
+		adornoMatriz[0] = app.loadImage("Arbol.png");
+		adornoMatriz[1] = app.loadImage("Pala.png");
+		adornoMatriz[2] = app.loadImage("Matas.png");
+		adornoMatriz[3] = app.loadImage("Tronco.png");
+		adornoMatriz[4] = app.loadImage("Lago.png");
+		
 		herramienta1 = app.loadImage("Herramienta1.png");
 		
 		vida = app.loadImage("Vida.png");
@@ -104,9 +112,12 @@ public class Logica {
 			app.image(niveles[0], 0, 0);
 			
 			mapa.pintar();
-
 			personaje.pintar(app,persona);
 			
+			app.imageMode(PConstants.CORNER);
+			pintarAdornos(app);
+			
+			app.imageMode(PConstants.CENTER);
 			for (int i = 0; i < personaje.getVidas(); i++) {
 				app.image(vida, 990 + i*30, 50);}
 			break;
@@ -134,6 +145,32 @@ public class Logica {
 
 	public void setPersonaje(Personaje personaje) {
 		this.personaje = personaje;
+	}
+	
+	public void pintarAdornos(PApplet app) {
+		app.image(adornoMatriz[0], 89, 309);
+		app.image(adornoMatriz[0], 140, 415);
+		app.image(adornoMatriz[0], 307, 380);
+		app.image(adornoMatriz[0], 405, 164);
+		app.image(adornoMatriz[0], 392, 256);
+		app.image(adornoMatriz[0], 545, 306);
+		app.image(adornoMatriz[0], 638, 407);
+		app.image(adornoMatriz[0], 784, 314);
+		
+		app.image(adornoMatriz[4], 875, 400);
+		
+		app.image(adornoMatriz[3], 820, 231);
+		app.image(adornoMatriz[3], 880, 231);
+		app.image(adornoMatriz[3], 845, 260);
+		
+		app.image(adornoMatriz[2], 567, 200);
+		app.image(adornoMatriz[2], 515, 265);
+		app.image(adornoMatriz[2], 600, 265);
+		app.image(adornoMatriz[2], 843, 465);
+		app.image(adornoMatriz[2], 919, 465);
+		
+		app.image(adornoMatriz[1], 297, 206 );
+		
 	}
 
 }
