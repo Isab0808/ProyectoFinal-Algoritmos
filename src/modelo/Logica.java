@@ -1,6 +1,7 @@
-package Modelo;
+package modelo;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PImage;
 
 public class Logica {
@@ -14,6 +15,8 @@ public class Logica {
 	PImage muro3;
 	PImage muro4;
 	PImage muro5;
+	
+	PImage persona;
 
 	Mapa mapa;
 	Personaje personaje;
@@ -22,11 +25,13 @@ public class Logica {
 
 		estado = 5;
 
-		muro1 = app.loadImage("./../data/Muro1.png");
+		muro1 = app.loadImage("Muro1.png");
 		muro2 = app.loadImage("Muro2.png");
 		muro3 = app.loadImage("Muro3.png");
 		muro4 = app.loadImage("Muro4.png");
 		muro5 = app.loadImage("Muro5.png");
+		
+		persona = app.loadImage("Personaje.png");
 		
 		pantalla = new PImage[5];
 		pantalla[0] = app.loadImage("pantallainicio.jpg");
@@ -42,7 +47,7 @@ public class Logica {
 		niveles[3] = app.loadImage("Nivel4.jpg");
 		
 		mapa = new Mapa(muro1, muro2, muro3, muro4, muro5, app);
-
+		personaje = new Personaje(1, 1, mapa);
 	}
 
 	public void pintarPantalla(PApplet app) {
@@ -50,68 +55,68 @@ public class Logica {
 		switch (estado) {
 
 		// Pantalla inicio
-
 		case 0:
 			app.image(pantalla[0], 0, 0);
-
 			break;
 
 		// Pantalla Login
 		case 1:
 			app.image(pantalla[1], 0, 0);
-
 			break;
 
 		// Pantalla Registro
 		case 2:
 			app.image(pantalla[2], 0, 0);
-
 			break;
 
 		// Pantalla Instrucciones 1
 		case 3:
 			app.image(pantalla[3], 0, 0);
-
 			break;
 
 		// Pantalla Instrucciones 2
 		case 4:
 			app.image(pantalla[4], 0, 0);
-
 			break;
 
 		// Pantalla nivel 1
 		case 5:
-			//app.image(niveles[0], 0, 0);
-
+			app.imageMode(PConstants.CORNER);
+			app.image(niveles[0], 0, 0);
 			
 			mapa.pintar();
 
-			//personaje = new Personaje(6, 5, mapa);
-			//personaje.pintar(app, muro2, muro1);
-			// personaje.mover(arriba); // pensarnos la variable... no sabemos que poner :(
+			personaje.pintar(app,persona);
 			
 			break;
 
 		// Pantalla nivel 2
 		case 6:
 			app.image(niveles[1], 0, 0);
-
 			break;
 
 		// Pantalla nivel 3
 		case 7:
 			app.image(niveles[2], 0, 0);
-
 			break;
-
+			
 		// Pantalla nivel 4
 		case 8:
 			app.image(niveles[3], 0, 0);
-
+			
 			break;
 		}
-
 	}
 
-}// END
+	public Personaje getPersonaje() {
+		return personaje;
+		
+	}
+
+	public void setPersonaje(Personaje personaje) {
+		this.personaje = personaje;
+	}
+	
+	
+	
+}
