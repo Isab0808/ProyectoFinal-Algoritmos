@@ -44,7 +44,55 @@ public void pintar (PApplet app, PImage personaje, PImage herramienta) { //Param
 	
 }
 
+public void mover(String dir) {
+	int valorDestino=-1;
+	switch (dir) {
+	case "arriba":
+		valorDestino=refMapa.getTipoMapa(fil-1, col);
+		if (valorDestino==0) {
+			fil=fil-1;
+			this.x=25+(col*50);  
+			this.y=15+(fil*50);
 
+		}
+		
+		break;
+		
+	case "abajo":
+		valorDestino=refMapa.getTipoMapa(fil+1, col);
+		if (valorDestino==0 || valorDestino==4) {
+			fil=fil+1;
+			this.x=25+(col*50);  
+			this.y=15+(fil*50);
+
+		}
+		
+		break;
+		
+	case "derecha":
+		valorDestino=refMapa.getTipoMapa(fil, col+1);
+		if (valorDestino==0 || valorDestino==4) {
+			col=col+1;
+			this.x=25+(col*50);  
+			this.y=15+(fil*50);
+
+		}
+		
+		break;
+		
+	case "izquierda":
+		valorDestino=refMapa.getTipoMapa(fil, col-1);
+		if (valorDestino==0 || valorDestino==4) {
+			col=col-1;
+			this.x=25+(col*50);  
+			this.y=15+(fil*50);
+
+		}
+		
+		break;
+	
+	}
+}
 public void tiempo () {
 	
 	double tiempoActual=System.currentTimeMillis();

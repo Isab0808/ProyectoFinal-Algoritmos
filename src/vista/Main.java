@@ -1,6 +1,7 @@
 package vista;
 import Controlador.Control;
 import Modelo.Mapa;
+import Modelo.Personaje;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -9,6 +10,7 @@ import processing.core.PImage;
 public class Main extends PApplet { 
 	
 	private Control control;
+	
 
 	public static void main(String[] args) {
 		PApplet.main("vista.Main");	
@@ -55,6 +57,7 @@ public class Main extends PApplet {
 	niveles[3] = loadImage("Nivel4.png");	**/
 
 	control = new Control(this);
+
 	
 	
 	}
@@ -71,9 +74,7 @@ public class Main extends PApplet {
 	}
 	
 	
-public void keyPressed() {
-	
-	}
+
 	
 	
 	
