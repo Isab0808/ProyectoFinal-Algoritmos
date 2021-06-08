@@ -342,6 +342,8 @@ public class Mapa {
 		mapa[11][21] = 1;
 		mapa[11][22] = 1;
 		mapa[11][23] = 1;
+		
+		herramienta = new Herramienta(8, 8);
 	}
 
 	public void pintar() {
@@ -378,9 +380,34 @@ public class Mapa {
 				y += 50;
 			}
 		}
+		if (herramienta != null) {
+			herramienta.pintar(app);
+		}
 	}
 
 	public int getTipoMapa(int fil, int col) {
 		return mapa[fil][col];
+	}
+
+	public boolean validarHerramienta(int px, int py) {
+		if (herramienta != null) {
+			double dx = (herramienta.getX() - px) * (herramienta.getX() - px);
+			double dy = (herramienta.getY() - py) * (herramienta.getY() - py);
+
+			double resultado = Math.sqrt(dx + dy);
+			if (resultado < 25) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Herramienta getHerramienta() {
+		if (herramienta != null) {
+			Herramienta tempHerramienta = herramienta;
+			herramienta = null;
+			return tempHerramienta;
+		}
+		return null;
 	}
 }

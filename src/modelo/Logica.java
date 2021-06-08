@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
@@ -9,6 +11,8 @@ public class Logica {
 	private int estado;
 	PImage[] pantalla;
 	PImage[] niveles;
+	PImage[] enemigo;
+	PImage[] herramientas;
 
 	PImage muro1;
 	PImage muro2;
@@ -20,6 +24,9 @@ public class Logica {
 
 	Mapa mapa;
 	Personaje personaje;
+	Herramienta herramienta;
+	
+	ArrayList<Herramienta> listaHerramienta;
 
 	public Logica(PApplet app) {
 
@@ -45,6 +52,18 @@ public class Logica {
 		niveles[1] = app.loadImage("Nivel2.jpg");
 		niveles[2] = app.loadImage("Nivel3.jpg");
 		niveles[3] = app.loadImage("Nivel4.jpg");
+		
+		enemigo = new PImage[4];
+		enemigo[0] = app.loadImage("Enemigo1.png");
+		enemigo[1] = app.loadImage("Enemigo2.png");
+		enemigo[2] = app.loadImage("Enemigo3.png");
+		enemigo[3] = app.loadImage("Enemigo4.png");
+		
+		herramientas = new PImage[4];
+		herramientas[0] = app.loadImage("Herramienta1.png");
+		herramientas[1] = app.loadImage("Herramienta2.png");
+		herramientas[2] = app.loadImage("Herramienta3.png");
+		herramientas[3] = app.loadImage("Herramienta4.png");
 		
 		mapa = new Mapa(muro1, muro2, muro3, muro4, muro5, app);
 		personaje = new Personaje(1, 1, mapa);
@@ -103,20 +122,16 @@ public class Logica {
 		// Pantalla nivel 4
 		case 8:
 			app.image(niveles[3], 0, 0);
-			
 			break;
 		}
 	}
-
+	
 	public Personaje getPersonaje() {
 		return personaje;
-		
 	}
 
 	public void setPersonaje(Personaje personaje) {
 		this.personaje = personaje;
 	}
-	
-	
-	
+
 }
