@@ -8,7 +8,7 @@ import processing.core.PImage;
 
 public class Logica {
 
-	private int estado;
+	private int estado,segundos,minutos;
 	PImage[] pantalla;
 	PImage[] niveles;
 	PImage[] enemigo;
@@ -34,6 +34,8 @@ public class Logica {
 	public Logica(PApplet app) {
 
 		estado = 5;
+		segundos = 59;
+		minutos = 2;
 
 		muro1 = app.loadImage("Muro1.png");
 		muro2 = app.loadImage("Muro2.png");
@@ -117,6 +119,8 @@ public class Logica {
 			app.imageMode(PConstants.CORNER);
 			pintarAdornos(app);
 			
+			temporizador(app);
+			
 			app.imageMode(PConstants.CENTER);
 			for (int i = 0; i < personaje.getVidas(); i++) {
 				app.image(vida, 990 + i*30, 50);}
@@ -170,7 +174,29 @@ public class Logica {
 		app.image(adornoMatriz[2], 919, 465);
 		
 		app.image(adornoMatriz[1], 297, 206 );
-		
+	}
+	
+	public void temporizador(PApplet app) {
+		if (app.frameCount % 60 == 0 && minutos >= 0) {
+			segundos--;
+		}
+		if (segundos == 0) {
+			minutos--;
+			segundos = 59;
+		}
+		if (minutos < 0) {
+			app.fill(255);
+			app.textSize(23);
+			app.text("0:00", 141, 60);
+		} else if (segundos <= 9) {
+			app.fill(255);
+			app.textSize(23);
+			app.text(minutos + ":0" + segundos, 141, 60);
+		} else if (segundos > 9) {
+			app.fill(255);
+			app.textSize(23);
+			app.text(minutos + ":" + segundos, 141, 60);
+		}
 	}
 
 }
