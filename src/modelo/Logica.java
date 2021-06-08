@@ -12,7 +12,6 @@ public class Logica {
 	PImage[] pantalla;
 	PImage[] niveles;
 	PImage[] enemigo;
-	PImage[] herramientas;
 
 	PImage muro1;
 	PImage muro2;
@@ -21,6 +20,9 @@ public class Logica {
 	PImage muro5;
 	
 	PImage persona;
+	PImage herramienta1;
+	
+	PImage vida;
 
 	Mapa mapa;
 	Personaje personaje;
@@ -59,11 +61,9 @@ public class Logica {
 		enemigo[2] = app.loadImage("Enemigo3.png");
 		enemigo[3] = app.loadImage("Enemigo4.png");
 		
-		herramientas = new PImage[4];
-		herramientas[0] = app.loadImage("Herramienta1.png");
-		herramientas[1] = app.loadImage("Herramienta2.png");
-		herramientas[2] = app.loadImage("Herramienta3.png");
-		herramientas[3] = app.loadImage("Herramienta4.png");
+		herramienta1 = app.loadImage("Herramienta1.png");
+		
+		vida = app.loadImage("Vida.png");
 		
 		mapa = new Mapa(muro1, muro2, muro3, muro4, muro5, app);
 		personaje = new Personaje(1, 1, mapa);
@@ -107,6 +107,8 @@ public class Logica {
 
 			personaje.pintar(app,persona);
 			
+			for (int i = 0; i < personaje.getVidas(); i++) {
+				app.image(vida, 990 + i*30, 50);}
 			break;
 
 		// Pantalla nivel 2

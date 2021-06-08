@@ -10,7 +10,6 @@ import vista.Main;
 public class Mapa {
 
 	private int[][] mapa;
-
 	private Herramienta herramienta;
 
 	private Cafe cafe;
@@ -22,6 +21,8 @@ public class Mapa {
 	PImage muro3;
 	PImage muro4;
 	PImage muro5;
+	
+	PImage herramienta1;
 
 	PApplet app;
 
@@ -386,7 +387,11 @@ public class Mapa {
 	}
 
 	public int getTipoMapa(int fil, int col) {
-		return mapa[fil][col];
+		if (col >= 24 || fil >= 12 || col < 0 || fil < 0) {
+			return 1;
+		} else {
+			return mapa[fil][col];
+		}
 	}
 
 	public boolean validarHerramienta(int px, int py) {
