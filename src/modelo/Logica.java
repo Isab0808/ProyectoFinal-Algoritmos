@@ -3,6 +3,8 @@ package modelo;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import exception.NoSamePasswordException;
+import exception.NoTextInsideException;
 import exception.UsuarioNoExisteException;
 import processing.core.PApplet;
 import processing.core.PConstants;
@@ -40,10 +42,11 @@ public class Logica {
 	ArrayList<Enemigo> enemigos;
 	
 	LinkedList<Usuario> usuarios;
+	Register register;
 
 	public Logica(PApplet app) {
 
-		estado = 1;
+		estado = 2;
 		segundos = 59;
 		minutos = 2;
 
@@ -111,7 +114,7 @@ public class Logica {
 		usuarios.add(new Usuario("master", "12345", "12345", "usuarioMaestro", null));
 		
 		login = new Login(app);
-		
+		register = new Register(app);
 	}
 
 	public void pintarPantalla(final PApplet app) {
@@ -351,11 +354,34 @@ public class Logica {
 					System.out.println(e.getMessage());
 					
 				}
+			}			
+			
+			
+			break;
+		case 2: 
+			if(register.getB1().isMouseOver(app.mouseX, app.mouseY)) {
+				try {
+					validarContraseñas(register.getPassword().getValue(), register.getCpassword().getValue());
+					if(validarContraseñas(register.getPassword().getValue(), register.getCpassword().getValue())) {
+						
+						if(validarCamposLlenos(register.getName().getValue(), register.getInput().getValue(),
+								register.getPassword().getValue(), register.getCpassword().getValue())) {
+							
+							estado = 3;
+							register.stopVisualization();
+						}
+						
+					}
+				} catch (NoSamePasswordException e) {
+					// TODO Auto-generated catch block
+					System.out.println(e.getMessage());
+				} catch (NoTextInsideException e) {
+					// TODO Auto-generated catch block
+					System.out.println(e.getMessage());
+				}
+					
+				
 			}
-			
-			
-			
-			
 			break;
 		case 3:
 			// Pantalla Instrucciones 1
@@ -406,5 +432,44 @@ public class Logica {
 		}
 		return false;
 		
+	}
+	
+	public boolean validarContraseñas(String c1, String c2) throws NoSamePasswordException{
+		boolean estado = false;
+		//c1.equals(c2)? true : throw new NoSamePasswordException();
+		
+		if(c1.equals(c2)) {
+			estado = true;
+		} else {
+			estado = false;
+			throw new NoSamePasswordException();
+			
+		}
+		
+		return estado;
+	}
+	
+	public void añadirUsuarios(String usuario,String contraseña, String confirmarContraseña,String nombre) {
+		usuarios.add(new Usuario(usuario, contraseña, confirmarContraseña, nombre, new Partida()));
+	}
+	
+	public boolean validarCamposLlenos(String name,String user,String password,String cpassword) throws NoTextInsideException {
+		String faltante;
+		faltante = name.equals("")? "name" : "";
+		faltante = user.equals("")? "user" : "";
+		faltante = password.equals("")? "password" : "";
+		faltante = cpassword.equals("")? "cpassword" : "";
+		
+		boolean estado = false;
+		
+		if(!name.equals("") && !user.equals("") && !password.equals("") && !cpassword.equals("")) {
+			System.out.println("entra 1");
+			estado = true;
+		} else {
+			estado = false;
+			throw new NoTextInsideException(faltante);
+		}
+		
+		return estado;
 	}
 }
