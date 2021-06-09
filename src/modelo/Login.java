@@ -1,16 +1,16 @@
 package modelo;
 
-import java.awt.event.MouseEvent;
+
 
 import interfascia.GUIController;
-import interfascia.GUIEvent;
+
 import interfascia.IFButton;
 import interfascia.IFLabel;
 import interfascia.IFTextField;
 import processing.core.PApplet;
 
 
-public class Login {
+public class Login  {
 	
 	private GUIController c; 
 	private IFTextField  input;
@@ -37,30 +37,124 @@ public class Login {
 		input.addActionListener(app);
 		
 		  b1 = new IFButton ("Ingresar", app.width/2-50,app.height/2+110, 200, 30);
+		  
+			this.app = app;
+			
+			c.add(input);
+			c.add(l);
+			c.add(password);
+			c.add(lp);
+			c.add(b1);
+			
+			b1.addActionListener(this);
+
+		//input.setLookAndFeel(lf);
 		
-		this.app = app;
-		
+	}
+	
+	
+	
+	public void stopVisualization () {
+		c.remove(input);
+		c.remove(l);
+		c.remove(password);
+		c.remove(lp);
+		c.remove(b1);
+	}
+	
+	public void continueVisualization () {
 		c.add(input);
 		c.add(l);
 		c.add(password);
 		c.add(lp);
 		c.add(b1);
-		
-		b1.addActionListener(this);
-		//input.setLookAndFeel(lf);
-		
+	}
+
+
+
+	public GUIController getC() {
+		return c;
+	}
+
+
+
+	public void setC(GUIController c) {
+		this.c = c;
+	}
+
+
+
+	public IFTextField getInput() {
+		return input;
+	}
+
+
+
+	public void setInput(IFTextField input) {
+		this.input = input;
+	}
+
+
+
+	public IFTextField getPassword() {
+		return password;
+	}
+
+
+
+	public void setPassword(IFTextField password) {
+		this.password = password;
+	}
+
+
+
+	public IFLabel getL() {
+		return l;
+	}
+
+
+
+	public void setL(IFLabel l) {
+		this.l = l;
+	}
+
+
+
+	public IFLabel getLp() {
+		return lp;
+	}
+
+
+
+	public void setLp(IFLabel lp) {
+		this.lp = lp;
+	}
+
+
+
+	public PApplet getApp() {
+		return app;
+	}
+
+
+
+	public void setApp(PApplet app) {
+		this.app = app;
+	}
+
+
+
+	public IFButton getB1() {
+		return b1;
+	}
+
+
+
+	public void setB1(IFButton b1) {
+		this.b1 = b1;
 	}
 	
-	public boolean actionPerformed () {
-		
-		  if (b1.isMouseOver(app.mouseX, app.mouseY)) {
-			    input.getValue();
-			    password.getValue();
-			    System.out.println(input.getValue() + " "+ password.getValue());
-			    return true;
-			  }
-		return false;
-	}
 	
+
 	
 }

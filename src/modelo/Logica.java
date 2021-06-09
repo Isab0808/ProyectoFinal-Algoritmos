@@ -104,6 +104,7 @@ public class Logica {
 		listaHerramienta.add(new Herramienta(10, 22));
 		
 		login = new Login(app);
+		
 	}
 
 	public void pintarPantalla(final PApplet app) {
@@ -327,12 +328,16 @@ public class Logica {
 		}
 	}
 
+	
 	public void clic(PApplet app) {
 		switch (estado) {
 		case 1:
-			if(login.actionPerformed()) {
-				estado = 2;
+			if(login.getB1().isMouseOver(app.mouseX, app.mouseY)) {
+				
 			}
+			
+			
+			
 			
 			break;
 		case 3:
