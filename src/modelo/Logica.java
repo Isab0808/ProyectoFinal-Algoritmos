@@ -31,9 +31,9 @@ public class Logica {
 	Herramienta herramienta;
 	
 	ArrayList<Herramienta> listaHerramienta;
+	ArrayList<Enemigo> enemigos;
 	
-	int dir;
-
+	
 	public Logica(PApplet app) {
 
 		estado = 5;
@@ -81,10 +81,17 @@ public class Logica {
 		mapa = new Mapa(muro1, muro2, muro3, muro4, muro5, app);
 		personaje = new Personaje(1, 1, mapa);
 		enemi = new Enemigo(8,1,mapa);
-		dir =-1;
+		
+		enemigos  = new ArrayList<>();
+		enemigos.add(new Enemigo(8,1,mapa));
+		enemigos.add(new Enemigo(8,5,mapa));
+		enemigos.add(new Enemigo(4,10,mapa));
+		enemigos.add(new Enemigo(1,15,mapa));
+		enemigos.add(new Enemigo(1,20,mapa));
+		enemigos.add(new Enemigo(2,22,mapa));
 	}
 
-	public void pintarPantalla(PApplet app) {
+	public void pintarPantalla(final PApplet app) {
 
 		switch (estado) {
 
@@ -120,12 +127,42 @@ public class Logica {
 			
 			mapa.pintar();
 			personaje.pintar(app,persona);
-			enemi.pintar(app, enemigo[0]);
-			if(app.frameCount%60==0) {
+			
+			// int index, condicion, accion a srguir
+			//tipo de referencia instancio => lista 
+			for (Enemigo enemigo : enemigos) {
+				enemigo.pintar(app, this.enemigo[0]);
+				enemigos.indexOf(enemigo);
+			}
+			new Thread(
+					new Runnable() {
+						@Override
+						public void run() {
+							
+						
+							try {
+								Thread.sleep(10000);
+								if(app.frameCount%30==0) {
+									for (Enemigo enemigo : enemigos) {
+										enemigo.tipoDireccion();
+									}
+								}
+								
+								
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}
+					
+					// () -> {}
+					
+					).start();
 				
 				//dir = 1 o -1
-				enemi.tipoDireccion();
-			}
+				
+			
 			app.imageMode(PConstants.CORNER);
 			pintarAdornos(app);
 			
