@@ -7,12 +7,17 @@ import processing.core.PConstants;
 import processing.core.PImage;
 
 public class Logica {
+	
+	Mapa mapa;
+	Personaje personaje;
+	Enemigo enemi;
+	Herramienta herramienta;
 
 	private int estado,segundos,minutos;
+	
 	PImage[] pantalla;
-	PImage[] niveles;
-	PImage[] enemigo;
 	PImage[] adornoMatriz;
+	PImage[] herramientas;
 
 	PImage muro1;
 	PImage muro2;
@@ -20,15 +25,12 @@ public class Logica {
 	PImage muro4;
 	PImage muro5;
 	
+	PImage nivel;
+	PImage enemigo;
 	PImage persona;
-	PImage herramienta1;
-	
 	PImage vida;
-
-	Mapa mapa;
-	Personaje personaje;
-	Enemigo enemi;
-	Herramienta herramienta;
+	
+	PImage herramienta1;
 	
 	ArrayList<Herramienta> listaHerramienta;
 	ArrayList<Enemigo> enemigos;
@@ -55,17 +57,9 @@ public class Logica {
 		pantalla[3] = app.loadImage("Instrucciones1.jpg");
 		pantalla[4] = app.loadImage("Instrucciones2.jpg");
 
-		niveles = new PImage[4];
-		niveles[0] = app.loadImage("Nivel1.jpg");
-		niveles[1] = app.loadImage("Nivel2.jpg");
-		niveles[2] = app.loadImage("Nivel3.jpg");
-		niveles[3] = app.loadImage("Nivel4.jpg");
-		
-		enemigo = new PImage[4];
-		enemigo[0] = app.loadImage("Enemigo1.png");
-		enemigo[1] = app.loadImage("Enemigo2.png");
-		enemigo[2] = app.loadImage("Enemigo3.png");
-		enemigo[3] = app.loadImage("Enemigo4.png");
+		nivel = app.loadImage("Nivel1.jpg");
+	
+		enemigo = app.loadImage("Enemigo1.png");
 		
 		adornoMatriz = new PImage[5];
 		adornoMatriz[0] = app.loadImage("Arbol.png");
@@ -74,13 +68,16 @@ public class Logica {
 		adornoMatriz[3] = app.loadImage("Tronco.png");
 		adornoMatriz[4] = app.loadImage("Lago.png");
 		
-		herramienta1 = app.loadImage("Herramienta1.png");
+		herramientas = new PImage[2];
+		herramientas[0] = app.loadImage("Herramienta1.png");
+		herramientas[1] = app.loadImage("Herramienta2.png");
 		
 		vida = app.loadImage("Vida.png");
 		
+		herramienta1 = app.loadImage("Herramienta1.png");
+		
 		mapa = new Mapa(muro1, muro2, muro3, muro4, muro5, app);
 		personaje = new Personaje(1, 1, mapa);
-		//enemi = new Enemigo(8,1,mapa);
 		
 		enemigos  = new ArrayList<>();
 		enemigos.add(new Enemigo(8,1,mapa,0));
@@ -89,6 +86,12 @@ public class Logica {
 		enemigos.add(new Enemigo(1,15,mapa,1));
 		enemigos.add(new Enemigo(1,20,mapa,0));
 		enemigos.add(new Enemigo(2,22,mapa,0));
+		
+		herramienta = new Herramienta(0, 0);
+		listaHerramienta = new ArrayList<Herramienta>();
+		listaHerramienta.add(new Herramienta(8, 8));
+		listaHerramienta.add(new Herramienta(1, 17));
+		listaHerramienta.add(new Herramienta(10, 22));
 	}
 
 	public void pintarPantalla(final PApplet app) {
@@ -123,7 +126,7 @@ public class Logica {
 		// Pantalla nivel 1
 		case 5:
 			app.imageMode(PConstants.CORNER);
-			app.image(niveles[0], 0, 0);
+			app.image(nivel, 0, 0);
 			
 			mapa.pintar();
 			personaje.pintar(app,persona);
@@ -131,63 +134,70 @@ public class Logica {
 			// int index, condicion, accion a srguir
 			//tipo de referencia instancio => lista 
 			for (Enemigo enemigo : enemigos) {
-				enemigo.pintar(app, this.enemigo[0]);
+				enemigo.pintar(app, this.enemigo);
 				enemigos.indexOf(enemigo);
 			}
 			new Thread(
 					new Runnable() {
 						@Override
 						public void run() {
-							
-						
 							try {
-								
 								if(app.frameCount%60==0) {
 									for (Enemigo enemigo : enemigos) {
-										
 										enemigo.tipoDireccion();
-										
 									}
 								}
 								Thread.sleep(1000);
 								
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
 					}
-					
-					// () -> {}
-					
 					).start();
 				
-				//dir = 1 o -1
-				
-			
 			app.imageMode(PConstants.CORNER);
 			pintarAdornos(app);
 			
 			temporizador(app);
 			
+			//For para pintar las vidas del personaje
 			app.imageMode(PConstants.CENTER);
 			for (int i = 0; i < personaje.getVidas(); i++) {
-				app.image(vida, 990 + i*30, 50);}
+				app.image(vida, 993 + i*30, 50);}
+			
+			//For para pintar la lista de herramientas, para validar el area sensible de personaje y herramienta
+			//Si se coincide con el area sensible de los dos, el personaje obtiene 1 vida y la herramienta se elimina de la lista de herramientas
+			for (int i = 0; i < listaHerramienta.size(); i++) {
+				listaHerramienta.get(i).pintar(app, herramienta1);
+				Herramienta herramientaActual = listaHerramienta.get(i);
+				if ((personaje.getX() -25 >= herramientaActual.getX()-25 && personaje.getX() -25 <= herramientaActual.getX()-25 + 50)
+						|| (personaje.getX() -25 + 50 >= herramientaActual.getX()-25
+								&& personaje.getX()-25 + 50 <= herramientaActual.getX()-9 + 50)) {
+					if ((personaje.getY()-25 >= herramientaActual.getY()-25
+							&& personaje.getY()-25 <= herramientaActual.getY() + 50)
+						|| (personaje.getY()-25 + persona.height >= herramientaActual.getY() -25
+								&& personaje.getY()-25 + persona.height <= herramientaActual.getY()-25 + 50)) {
+						personaje.darVida();
+						listaHerramienta.remove(i);
+					}
+				}
+			}
 			break;
 
 		// Pantalla nivel 2
 		case 6:
-			app.image(niveles[1], 0, 0);
+			
 			break;
 
 		// Pantalla nivel 3
 		case 7:
-			app.image(niveles[2], 0, 0);
+			
 			break;
 			
 		// Pantalla nivel 4
 		case 8:
-			app.image(niveles[3], 0, 0);
+			
 			break;
 		}
 	}

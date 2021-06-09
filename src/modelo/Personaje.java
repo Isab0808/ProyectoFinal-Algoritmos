@@ -28,9 +28,6 @@ public class Personaje {
 	public void pintar(PApplet app, PImage persona) {
 		app.imageMode(PConstants.CENTER);
 		app.image(persona, x, y);
-		if (refHerramientaInventario != null) {
-			refHerramientaInventario.pintar(app,this);
-		}
 	}
 
 	public void mover(String dir) {
@@ -42,9 +39,6 @@ public class Personaje {
 				fil = fil - 1;
 				this.x = 25 + (col * 50);
 				this.y = 25 + (fil * 50)+100;
-				if(refHerramientaInventario == null && refMapa.validarHerramienta(x,y)) {
-					refHerramientaInventario = refMapa.getHerramienta();
-				}
 			}
 			System.out.println(valorDestino);
 			break;
@@ -56,9 +50,6 @@ public class Personaje {
 				
 				this.x = 25 + (col * 50);
 				this.y = 25 + (fil * 50)+100;
-				if(refHerramientaInventario == null && refMapa.validarHerramienta(x,y)) {
-					refHerramientaInventario = refMapa.getHerramienta();
-				}
 			}
 			break;
 
@@ -68,9 +59,6 @@ public class Personaje {
 				col = col + 1;
 				this.x = 25 + (col * 50);
 				this.y = 25 + (fil * 50)+100;
-				if(refHerramientaInventario == null && refMapa.validarHerramienta(x,y)) {
-					refHerramientaInventario = refMapa.getHerramienta();
-				}
 			}
 			break;
 
@@ -80,9 +68,6 @@ public class Personaje {
 				col = col - 1;
 				this.x = 25 + (col * 50);
 				this.y = 25 + (fil * 50)+100;
-				if(refHerramientaInventario == null && refMapa.validarHerramienta(x,y)) {
-					refHerramientaInventario = refMapa.getHerramienta();
-				}
 			}
 			break;
 		}
@@ -96,7 +81,7 @@ public class Personaje {
 	}
 
 	public void darVida() {
-		if (vidas < 3) {
+		if (vidas < 4) {
 			vidas++;
 		}
 	}

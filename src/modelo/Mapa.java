@@ -343,8 +343,6 @@ public class Mapa {
 		mapa[11][21] = 1;
 		mapa[11][22] = 1;
 		mapa[11][23] = 1;
-		
-		herramienta = new Herramienta(8, 8);
 	}
 
 	public void pintar() {
@@ -382,7 +380,7 @@ public class Mapa {
 			}
 		}
 		if (herramienta != null) {
-			herramienta.pintar(app);
+			herramienta.pintar(app, herramienta1);
 		}
 	}
 
