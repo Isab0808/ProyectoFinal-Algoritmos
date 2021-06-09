@@ -378,4 +378,6 @@ public class Logica {
 			break;
 		}
 	}
+	
+	
 }
