@@ -119,7 +119,7 @@ public class Logica {
 		// Pantalla Login
 		case 1:
 			app.image(pantalla[1], 0, 0);
-			login.pintar();
+			
 			break;
 
 		// Pantalla Registro
