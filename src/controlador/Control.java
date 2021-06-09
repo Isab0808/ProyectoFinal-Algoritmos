@@ -29,6 +29,10 @@ public class Control {
 			break;
 		}
 	}
+	
+	public void clic (PApplet app) {
+		logica.clic(app);
+	}
 }
 
 

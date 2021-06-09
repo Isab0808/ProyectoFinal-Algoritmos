@@ -25,7 +25,10 @@ public class Main extends PApplet {
 		background(255);
 
 		control.pintarPantalla(this);
-
+	}
+	
+	public void mousePressed() {
+		control.clic(this);
 	}
 	
 	public void keyPressed() {
