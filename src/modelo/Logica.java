@@ -1,11 +1,14 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 
 import exception.NoSamePasswordException;
 import exception.NoTextInsideException;
 import exception.UsuarioNoExisteException;
+import ordenamiento.OrdenarPorPuntaje;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
@@ -43,6 +46,7 @@ public class Logica {
 	
 	LinkedList<Usuario> usuarios;
 	Register register;
+	 OrdenarPorPuntaje ordenarPuntaje;
 
 	public Logica(PApplet app) {
 
@@ -116,6 +120,8 @@ public class Logica {
 		
 		login = new Login(app);
 		register = new Register(app);
+		
+		ordenarPuntaje = new OrdenarPorPuntaje();
 	}
 
 	public void pintarPantalla(final PApplet app) {
@@ -487,5 +493,19 @@ public class Logica {
 		}
 		
 		return estado;
+	}
+	
+	public void ordenarPuntajes(char key) {
+		switch (key) {
+		case 'z':
+			Collections.sort(usuarios);
+			break;
+		case 'x': 
+			Collections.sort(usuarios, ordenarPuntaje);
+			break;
+
+		default:
+			break;
+		}
 	}
 }

@@ -1,6 +1,6 @@
 package modelo;
 
-public class Usuario {
+public class Usuario implements Comparable<Usuario> {
 
 	private String usuario;
 	private String contraseña;
@@ -54,6 +54,12 @@ public class Usuario {
 
 	public void setP(Partida p) {
 		this.p = p;
+	}
+
+	@Override
+	public int compareTo(Usuario o) {
+		// TODO Auto-generated method stub
+		return getNombre().compareTo(o.getNombre());
 	}
 	
 	
