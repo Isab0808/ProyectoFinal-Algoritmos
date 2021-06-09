@@ -59,7 +59,9 @@ public class Login  {
 		c.remove(l);
 		c.remove(password);
 		c.remove(lp);
-		c.remove(b1);
+		b1.setPosition(-200, -2000);
+		
+
 	}
 	
 	public void continueVisualization () {

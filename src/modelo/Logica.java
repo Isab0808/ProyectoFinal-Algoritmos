@@ -1,7 +1,9 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
+import exception.UsuarioNoExisteException;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
@@ -36,6 +38,8 @@ public class Logica {
 
 	ArrayList<Herramienta> listaHerramienta;
 	ArrayList<Enemigo> enemigos;
+	
+	LinkedList<Usuario> usuarios;
 
 	public Logica(PApplet app) {
 
@@ -102,6 +106,9 @@ public class Logica {
 		listaHerramienta.add(new Herramienta(8, 8));
 		listaHerramienta.add(new Herramienta(1, 17));
 		listaHerramienta.add(new Herramienta(10, 22));
+		
+		usuarios = new LinkedList<Usuario>();
+		usuarios.add(new Usuario("master", "12345", "12345", "usuarioMaestro", null));
 		
 		login = new Login(app);
 		
@@ -333,7 +340,17 @@ public class Logica {
 		switch (estado) {
 		case 1:
 			if(login.getB1().isMouseOver(app.mouseX, app.mouseY)) {
-				
+				try {
+					validarUsuario(login.getInput().getValue(), login.getPassword().getValue());
+					if(validarUsuario(login.getInput().getValue(), login.getPassword().getValue())) {
+						estado = 3;
+						login.stopVisualization();
+					}
+				} catch (UsuarioNoExisteException e) {
+					// TODO Auto-generated catch block
+					System.out.println(e.getMessage());
+					
+				}
 			}
 			
 			
@@ -379,5 +396,15 @@ public class Logica {
 		}
 	}
 	
-	
+	public boolean validarUsuario(String user,String password) throws UsuarioNoExisteException {
+		for (Usuario usuario : usuarios) {
+			if(user.equals(usuario.getUsuario()) && password.equals(usuario.getContraseña())) {
+				return true;
+			} else {
+				throw new UsuarioNoExisteException();
+			}
+		}
+		return false;
+		
+	}
 }
