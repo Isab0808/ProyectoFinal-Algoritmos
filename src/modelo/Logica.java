@@ -46,7 +46,7 @@ public class Logica {
 
 	public Logica(PApplet app) {
 
-		estado = 2;
+		estado = 9;
 		segundos = 59;
 		minutos = 2;
 
@@ -58,7 +58,7 @@ public class Logica {
 
 		persona = app.loadImage("Personaje.png");
 
-		pantalla = new PImage[8];
+		pantalla = new PImage[9];
 		pantalla[0] = app.loadImage("pantallainicio.jpg");
 		pantalla[1] = app.loadImage("iniciarSesion.jpeg");
 		pantalla[2] = app.loadImage("PantallaRegistro.jpg");
@@ -67,6 +67,7 @@ public class Logica {
 		pantalla[5] = app.loadImage("PantallaPerdio.jpg");
 		pantalla[6] = app.loadImage("PantallaGano.jpg");
 		pantalla[7] = app.loadImage("PantallaResumen.jpg");
+		pantalla[8] = app.loadImage("PantallaPartidas.jpg");
 
 		nivel = app.loadImage("Nivel1.jpg");
 
@@ -278,6 +279,21 @@ public class Logica {
 			}
 
 			break;
+		case 9:
+			app.image(pantalla[8], 0, 0);
+			try {
+				for (Usuario usuario : usuarios) {
+					app.text(usuario.getNombre(), 50, 100);
+					app.text(usuario.getP().getTime(), 100, 100);
+					app.text(usuario.getP().getPuntaje(), 150, 100);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("No hay resultados");
+				app.text("No hay resultados", app.width/2, 300);
+			}
+			
+			break;
 		}
 	}
 
@@ -450,7 +466,7 @@ public class Logica {
 	}
 	
 	public void añadirUsuarios(String usuario,String contraseña, String confirmarContraseña,String nombre) {
-		usuarios.add(new Usuario(usuario, contraseña, confirmarContraseña, nombre, new Partida()));
+		usuarios.add(new Usuario(usuario, contraseña, confirmarContraseña, nombre, null));
 	}
 	
 	public boolean validarCamposLlenos(String name,String user,String password,String cpassword) throws NoTextInsideException {
