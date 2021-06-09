@@ -10,6 +10,7 @@ public class Enemigo {
 	Mapa refMapa;
 	int valorDestino;
 	PImage persona;
+	int dir;
 
 	
 	int x, y, col, fil, vidas;
@@ -21,7 +22,7 @@ public class Enemigo {
 		this.x = 25 + (col * 50);
 		this.y = 25 + (fil * 50) +100;
 		this.refMapa = refMapa;
-
+		this.dir = 1;
 		
 	}
 	
@@ -32,6 +33,7 @@ public class Enemigo {
 	}
 	
 	public void mover(String dir) {
+
 		valorDestino = 5;
 		switch (dir) {
 		case "arriba":
@@ -75,6 +77,22 @@ public class Enemigo {
 				
 			}
 			break;
+		}
+	}
+	
+	public void tipoDireccion() {
+		// si se hoca no sea boludo cambie de direccion
+		if(dir==1) {
+			mover("arriba");
+		}
+		
+		if(dir==-1) {
+			mover("abajo");
+		}
+		
+		if(valorDestino!=5) {
+			//System.out.println("enenmi"+" "+ enemi.valorDestino + " " + dir);
+			dir*=-1; // dir = dir * -1  // - * - = + // +* - = -
 		}
 	}
 }

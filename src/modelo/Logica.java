@@ -124,18 +124,7 @@ public class Logica {
 			if(app.frameCount%60==0) {
 				
 				//dir = 1 o -1
-				if(dir==1) {
-					enemi.mover("arriba");
-				}
-				
-				if(dir==-1) {
-					enemi.mover("abajo");
-				}
-				
-				if(enemi.valorDestino!=5) {
-					System.out.println("enenmi"+" "+ enemi.valorDestino + " " + dir);
-					dir*=-1; // dir = dir * -1  // - * - = + // +* - = -
-				}
+				enemi.tipoDireccion();
 			}
 			app.imageMode(PConstants.CORNER);
 			pintarAdornos(app);
