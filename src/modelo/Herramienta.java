@@ -8,7 +8,7 @@ public class Herramienta {
 	protected int x, y, fil, col, aumentoVida;
 	
 	Logica refLogica;
-	PImage herramienta1;
+	PImage vitamina;
 	
 	public Herramienta(int fil, int col) {
 		this.fil = fil;
@@ -17,8 +17,8 @@ public class Herramienta {
 		this.y =25+(fil*50)+100;
 	}
 	
-	public void pintar(PApplet app, PImage herramienta1) {
-		app.image(herramienta1, x, y);
+	public void pintar(PApplet app, PImage vitamina) {
+		app.image(vitamina, x, y);
 		//app.fill(255,255,0);
 		//app.ellipse(x, y, 25, 25);
 	}

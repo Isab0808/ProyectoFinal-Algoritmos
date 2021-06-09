@@ -17,7 +17,6 @@ public class Logica {
 
 	PImage[] pantalla;
 	PImage[] adornoMatriz;
-	PImage[] herramientas;
 
 	PImage[] botones;
 
@@ -32,14 +31,14 @@ public class Logica {
 	PImage persona;
 	PImage vida;
 
-	PImage herramienta1;
+	PImage vitamina;
 
 	ArrayList<Herramienta> listaHerramienta;
 	ArrayList<Enemigo> enemigos;
 
 	public Logica(PApplet app) {
 
-		estado = 3;
+		estado = 8;
 		segundos = 59;
 		minutos = 2;
 
@@ -51,12 +50,15 @@ public class Logica {
 
 		persona = app.loadImage("Personaje.png");
 
-		pantalla = new PImage[5];
+		pantalla = new PImage[8];
 		pantalla[0] = app.loadImage("pantallainicio.jpg");
 		pantalla[1] = app.loadImage("PantallaLogin.jpg");
 		pantalla[2] = app.loadImage("PantallaRegistro.jpg");
 		pantalla[3] = app.loadImage("Instrucciones1.jpg");
 		pantalla[4] = app.loadImage("Instrucciones2.jpg");
+		pantalla[5] = app.loadImage("PantallaPerdio.jpg");
+		pantalla[6] = app.loadImage("PantallaGano.jpg");
+		pantalla[7] = app.loadImage("PantallaResumen.jpg");
 
 		nivel = app.loadImage("Nivel1.jpg");
 
@@ -69,19 +71,19 @@ public class Logica {
 		adornoMatriz[3] = app.loadImage("Tronco.png");
 		adornoMatriz[4] = app.loadImage("Lago.png");
 
-		herramientas = new PImage[2];
-		herramientas[0] = app.loadImage("Herramienta1.png");
-		herramientas[1] = app.loadImage("Herramienta2.png");
-
-		botones = new PImage[4];
+		botones = new PImage[8];
 		botones[0] = app.loadImage("Boton1.png");
 		botones[1] = app.loadImage("BotonOprimido1.png");
 		botones[2] = app.loadImage("Boton2.png");
 		botones[3] = app.loadImage("BotonOprimido2.png");
+		botones[4] = app.loadImage("BotonPerdio.png");
+		botones[5] = app.loadImage("BotonPerdioOprimido.png");
+		botones[6] = app.loadImage("BotonGano.png");
+		botones[7] = app.loadImage("BotonGanoOprimido.png");
 
 		vida = app.loadImage("Vida.png");
 
-		herramienta1 = app.loadImage("Herramienta1.png");
+		vitamina = app.loadImage("Herramienta1.png");
 
 		mapa = new Mapa(muro1, muro2, muro3, muro4, muro5, app);
 		personaje = new Personaje(1, 1, mapa);
@@ -141,12 +143,12 @@ public class Logica {
 			app.image(pantalla[4], 0, 0);
 
 			// Imagen Boton
-			app.image(botones[2], 425, 553);
+			app.image(botones[2], 425, 520);
 
 			// Si esta el mouse encima del Boton mostrar imagen Boton Oprimido
 			// Esto es mas que todo estetica
-			if (app.mouseX > 425 && app.mouseX < 425 + 350 && app.mouseY > 553 && app.mouseY < 553 + 75) {
-				app.image(botones[3], 425, 553);
+			if (app.mouseX > 425 && app.mouseX < 425 + 350 && app.mouseY > 520 && app.mouseY < 520 + 75) {
+				app.image(botones[3], 425, 520);
 			}
 			break;
 
@@ -197,7 +199,7 @@ public class Logica {
 			// Si se coincide con el area sensible de los dos, el personaje obtiene 1 vida y
 			// la herramienta se elimina de la lista de herramientas
 			for (int i = 0; i < listaHerramienta.size(); i++) {
-				listaHerramienta.get(i).pintar(app, herramienta1);
+				listaHerramienta.get(i).pintar(app, vitamina);
 				Herramienta herramientaActual = listaHerramienta.get(i);
 				if ((personaje.getX() - 25 >= herramientaActual.getX() - 25
 						&& personaje.getX() - 25 <= herramientaActual.getX() - 25 + 50)
@@ -214,18 +216,50 @@ public class Logica {
 			}
 			break;
 
-		// Pantalla nivel 2
+		// Pantalla Perdio
 		case 6:
+			// Imagen Fondo
+			app.image(pantalla[5], 0, 0);
 
+			// Imagen Boton
+			app.image(botones[4], 500, 553);
+
+			// Si esta el mouse encima del Boton mostrar imagen Boton Oprimido
+			// Esto es mas que todo estetica
+			if (app.mouseX > 500 && app.mouseX < 500 + 231 && app.mouseY > 553 && app.mouseY < 553 + 52) {
+				app.image(botones[5], 500, 553);
+			}
 			break;
 
-		// Pantalla nivel 3
+		// Pantalla Gano
 		case 7:
+			// Imagen Fondo
+			app.image(pantalla[6], 0, 0);
+
+			// Imagen Boton
+			app.image(botones[6], 507, 479);
+
+			// Si esta el mouse encima del Boton mostrar imagen Boton Oprimido
+			// Esto es mas que todo estetica
+			if (app.mouseX > 507 && app.mouseX < 507 + 186 && app.mouseY > 479 && app.mouseY < 479 + 70) {
+				app.image(botones[7], 507, 479); 
+			}
 
 			break;
 
-		// Pantalla nivel 4
+		// Pantalla Resumen
 		case 8:
+			// Imagen Fondo
+			app.image(pantalla[7], 0, 0);
+
+			// Imagen Boton
+			app.image(botones[6], 504, 503);
+
+			// Si esta el mouse encima del Boton mostrar imagen Boton Oprimido
+			// Esto es mas que todo estetica
+			if (app.mouseX > 504 && app.mouseX < 504 + 231 && app.mouseY > 503 && app.mouseY < 503 + 52) {
+				app.image(botones[7], 504, 503);
+			}
 
 			break;
 		}
@@ -239,7 +273,7 @@ public class Logica {
 		this.personaje = personaje;
 	}
 
-	// Se pintaron los objetos del mapa
+	// Objetos decorativos que van encima de la matriz
 	public void pintarAdornos(PApplet app) {
 		app.image(adornoMatriz[0], 89, 309);
 		app.image(adornoMatriz[0], 140, 415);
@@ -291,17 +325,39 @@ public class Logica {
 	public void clic(PApplet app) {
 		switch (estado) {
 		case 3:
-			// Cuando se le de clic en el boton Inicio pasar a la otra pantalla de
+			// Pantalla Instrucciones 1
+			// Cuando se le de clic en el boton pasar a la otra pantalla de
 			// instrucciones
 			if (app.mouseX > 498 && app.mouseX < 498 + 208 && app.mouseY > 520 && app.mouseY < 520 + 80) {
 				estado = 4;
 			}
 			break;
 		case 4:
-			// Cuando se le de clic en el boton Inicio pasar a la otra pantalla de
-			// instrucciones
-			if (app.mouseX > 425 && app.mouseX < 425 + 350 && app.mouseY > 553 && app.mouseY < 553 + 75) {
-				estado =5; 
+			// Pantalla Instrucciones 2
+			// Cuando se le de clic en el boton Inicio pasar a la pantalla del escenario
+			if (app.mouseX > 425 && app.mouseX < 425 + 350 && app.mouseY > 520 && app.mouseY < 520 + 75) {
+				estado = 5;
+			}
+			break;
+		case 6:
+			// Pantalla Perdio
+			// Cuando se le de clic en el boton Ok pasar a la pantalla del Resumen
+			if (app.mouseX > 500 && app.mouseX < 500 + 231 && app.mouseY > 553 && app.mouseY < 553 + 52) {
+				estado = 8;
+			}
+			break;
+		case 7:
+			// Pantalla Gano
+			// Cuando se le de clic en el boton Ok pasar a la pantalla del Resumen
+			if (app.mouseX > 507 && app.mouseX < 507 + 186 && app.mouseY > 479 && app.mouseY < 479 + 70) {
+				estado = 8;
+			}
+			break;
+		case 8:
+			// Pantalla Resumen
+			// Cuando se le de clic en el boton Ok pasar a la pantalla de las instrucciones 1
+			if (app.mouseX > 504 && app.mouseX < 504 + 231 && app.mouseY > 503 && app.mouseY < 503 + 52) {
+				estado = 3;
 			}
 			break;
 		}
