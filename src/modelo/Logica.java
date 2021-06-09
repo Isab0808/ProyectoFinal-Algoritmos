@@ -80,15 +80,15 @@ public class Logica {
 		
 		mapa = new Mapa(muro1, muro2, muro3, muro4, muro5, app);
 		personaje = new Personaje(1, 1, mapa);
-		enemi = new Enemigo(8,1,mapa);
+		//enemi = new Enemigo(8,1,mapa);
 		
 		enemigos  = new ArrayList<>();
-		enemigos.add(new Enemigo(8,1,mapa));
-		enemigos.add(new Enemigo(8,5,mapa));
-		enemigos.add(new Enemigo(4,10,mapa));
-		enemigos.add(new Enemigo(1,15,mapa));
-		enemigos.add(new Enemigo(1,20,mapa));
-		enemigos.add(new Enemigo(2,22,mapa));
+		enemigos.add(new Enemigo(8,1,mapa,0));
+		enemigos.add(new Enemigo(10,5,mapa,1));
+		enemigos.add(new Enemigo(4,10,mapa,0));
+		enemigos.add(new Enemigo(1,15,mapa,1));
+		enemigos.add(new Enemigo(1,20,mapa,0));
+		enemigos.add(new Enemigo(2,22,mapa,0));
 	}
 
 	public void pintarPantalla(final PApplet app) {
@@ -141,13 +141,15 @@ public class Logica {
 							
 						
 							try {
-								Thread.sleep(10000);
-								if(app.frameCount%30==0) {
+								
+								if(app.frameCount%60==0) {
 									for (Enemigo enemigo : enemigos) {
+										
 										enemigo.tipoDireccion();
+										
 									}
 								}
-								
+								Thread.sleep(1000);
 								
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block

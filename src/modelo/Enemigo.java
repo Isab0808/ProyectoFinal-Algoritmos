@@ -14,8 +14,9 @@ public class Enemigo {
 
 	
 	int x, y, col, fil, vidas;
+	private int tipoDir;
 
-	public Enemigo(int fil, int col, Mapa refMapa) {
+	public Enemigo(int fil, int col, Mapa refMapa, int tipoDir) {
 		this.col = col;
 		this.fil = fil;
 		this.vidas = 1;
@@ -23,6 +24,7 @@ public class Enemigo {
 		this.y = 25 + (fil * 50) +100;
 		this.refMapa = refMapa;
 		this.dir = 1;
+		this.tipoDir = tipoDir;
 		
 	}
 	
@@ -82,13 +84,30 @@ public class Enemigo {
 	
 	public void tipoDireccion() {
 		// si se hoca no sea boludo cambie de direccion
-		if(dir==1) {
-			mover("arriba");
+		switch (tipoDir) {
+		case 0:
+			if(dir==1) {
+				mover("arriba");
+			}
+			
+			if(dir==-1) {
+				mover("abajo");
+			}
+			break;
+
+		case 1:
+			if(dir==1) {
+				mover("izquierda");
+			}
+			
+			if(dir==-1) {
+				mover("derecha");
+			}
+			break;
+		default:
+			break;
 		}
 		
-		if(dir==-1) {
-			mover("abajo");
-		}
 		
 		if(valorDestino!=5) {
 			//System.out.println("enenmi"+" "+ enemi.valorDestino + " " + dir);
