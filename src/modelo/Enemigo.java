@@ -8,7 +8,7 @@ public class Enemigo {
 	
 	Logica refLogica;
 	Mapa refMapa;
-	
+	int valorDestino;
 	PImage persona;
 
 	
@@ -32,7 +32,7 @@ public class Enemigo {
 	}
 	
 	public void mover(String dir) {
-		int valorDestino = 5;
+		valorDestino = 5;
 		switch (dir) {
 		case "arriba":
 			valorDestino = refMapa.getTipoMapa(fil - 1, col);

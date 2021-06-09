@@ -27,9 +27,12 @@ public class Logica {
 
 	Mapa mapa;
 	Personaje personaje;
+	Enemigo enemi;
 	Herramienta herramienta;
 	
 	ArrayList<Herramienta> listaHerramienta;
+	
+	int dir;
 
 	public Logica(PApplet app) {
 
@@ -77,6 +80,8 @@ public class Logica {
 		
 		mapa = new Mapa(muro1, muro2, muro3, muro4, muro5, app);
 		personaje = new Personaje(1, 1, mapa);
+		enemi = new Enemigo(8,1,mapa);
+		dir =-1;
 	}
 
 	public void pintarPantalla(PApplet app) {
@@ -115,7 +120,23 @@ public class Logica {
 			
 			mapa.pintar();
 			personaje.pintar(app,persona);
-			
+			enemi.pintar(app, enemigo[0]);
+			if(app.frameCount%60==0) {
+				
+				//dir = 1 o -1
+				if(dir==1) {
+					enemi.mover("arriba");
+				}
+				
+				if(dir==-1) {
+					enemi.mover("abajo");
+				}
+				
+				if(enemi.valorDestino!=5) {
+					System.out.println("enenmi"+" "+ enemi.valorDestino + " " + dir);
+					dir*=-1; // dir = dir * -1  // - * - = + // +* - = -
+				}
+			}
 			app.imageMode(PConstants.CORNER);
 			pintarAdornos(app);
 			
