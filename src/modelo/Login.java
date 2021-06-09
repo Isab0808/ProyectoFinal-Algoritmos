@@ -51,12 +51,15 @@ public class Login {
 		
 	}
 	
-	public void actionPerformed (GUIEvent e) {
-		  if (e.getSource() == b1) {
+	public boolean actionPerformed () {
+		
+		  if (b1.isMouseOver(app.mouseX, app.mouseY)) {
 			    input.getValue();
 			    password.getValue();
 			    System.out.println(input.getValue() + " "+ password.getValue());
+			    return true;
 			  }
+		return false;
 	}
 	
 	

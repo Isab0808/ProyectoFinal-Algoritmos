@@ -329,6 +329,12 @@ public class Logica {
 
 	public void clic(PApplet app) {
 		switch (estado) {
+		case 1:
+			if(login.actionPerformed()) {
+				estado = 2;
+			}
+			
+			break;
 		case 3:
 			// Pantalla Instrucciones 1
 			// Cuando se le de clic en el boton pasar a la otra pantalla de
