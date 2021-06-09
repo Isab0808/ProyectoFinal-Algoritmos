@@ -12,6 +12,7 @@ public class Logica {
 	Personaje personaje;
 	Enemigo enemi;
 	Herramienta herramienta;
+	Login login;
 
 	private int estado, segundos, minutos;
 
@@ -38,7 +39,7 @@ public class Logica {
 
 	public Logica(PApplet app) {
 
-		estado = 8;
+		estado = 1;
 		segundos = 59;
 		minutos = 2;
 
@@ -52,7 +53,7 @@ public class Logica {
 
 		pantalla = new PImage[8];
 		pantalla[0] = app.loadImage("pantallainicio.jpg");
-		pantalla[1] = app.loadImage("PantallaLogin.jpg");
+		pantalla[1] = app.loadImage("iniciarSesion.jpeg");
 		pantalla[2] = app.loadImage("PantallaRegistro.jpg");
 		pantalla[3] = app.loadImage("Instrucciones1.jpg");
 		pantalla[4] = app.loadImage("Instrucciones2.jpg");
@@ -101,6 +102,8 @@ public class Logica {
 		listaHerramienta.add(new Herramienta(8, 8));
 		listaHerramienta.add(new Herramienta(1, 17));
 		listaHerramienta.add(new Herramienta(10, 22));
+		
+		login = new Login(app);
 	}
 
 	public void pintarPantalla(final PApplet app) {
@@ -110,11 +113,13 @@ public class Logica {
 		// Pantalla inicio
 		case 0:
 			app.image(pantalla[0], 0, 0);
+			
 			break;
 
 		// Pantalla Login
 		case 1:
 			app.image(pantalla[1], 0, 0);
+			login.pintar();
 			break;
 
 		// Pantalla Registro
