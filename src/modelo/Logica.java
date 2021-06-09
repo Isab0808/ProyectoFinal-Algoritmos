@@ -200,6 +200,7 @@ public class Logica {
 		this.personaje = personaje;
 	}
 	
+	// Se pintaron los objetos del mapa
 	public void pintarAdornos(PApplet app) {
 		app.image(adornoMatriz[0], 89, 309);
 		app.image(adornoMatriz[0], 140, 415);
