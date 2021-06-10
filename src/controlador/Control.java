@@ -1,5 +1,6 @@
 package controlador;
 
+import exception.NoMoreCoffee;
 import modelo.Logica;
 import processing.core.PApplet;
 
@@ -10,7 +11,12 @@ public class Control {
 	public Control (PApplet app) {logica = new Logica (app); }
 	
 	public void pintarPantalla (PApplet app) {
-		logica.pintarPantalla(app);
+		try {
+			logica.pintarPantalla(app);
+		} catch (NoMoreCoffee e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void moverPersonaje(char key) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import exception.NoMoreCoffee;
 import exception.NoSamePasswordException;
 import exception.NoTextInsideException;
 import exception.UsuarioNoExisteException;
@@ -55,7 +56,7 @@ public class Logica {
 
 	public Logica(PApplet app) {
 
-		estado = 2;
+		estado = 5;
 		segundos = 59;
 		minutos = 2;
 		puntaje = 0;
@@ -123,8 +124,8 @@ public class Logica {
 		listaHerramienta.add(new Herramienta(1, 17));
 		listaHerramienta.add(new Herramienta(10, 22));
 		
-		int randomX = (int)app.random(0,1200);
-		int randomY = (int)app.random(0,70);
+		int randomX = (int)app.random(0,22);
+		int randomY = (int)app.random(0,10);
 		listaCafes = new ArrayList<>();
 		listaCafes.add(new Cafe(randomX, randomY));
 		listaCafes.add(new Cafe(5, 1));
@@ -138,7 +139,7 @@ public class Logica {
 		ordenarPuntaje = new OrdenarPorPuntaje();
 	}
 
-	public void pintarPantalla(final PApplet app) {
+	public void pintarPantalla(final PApplet app) throws NoMoreCoffee {
 
 		switch (estado) {
 
@@ -280,21 +281,26 @@ public class Logica {
 			
 			// For para pintar los cafes y validar la posicion del personaje y el cafe
 			//Si coinciden se suma al puntaje y se elimina de la lista el cafe
-			for (int i = 0; i < listaCafes.size(); i++) {
-				listaCafes.get(i).pintar(app, cafeG);
-				Cafe cafeActual = listaCafes.get(i);
-				if ((personaje.getX() -25 >= cafeActual.getX()-20 && personaje.getX() -25 <= cafeActual.getX()-20 + 50)
-						|| (personaje.getX() -25 + 50 >= cafeActual.getX()-20
-								&& personaje.getX()-25 + 50 <= cafeActual.getX()-20 + 50)) {
-					if ((personaje.getY()-25 >= cafeActual.getY()-25
-							&& personaje.getY()-25 <= cafeActual.getY() + 50)
-						|| (personaje.getY()-25 + persona.height >= cafeActual.getY() -25
-								&& personaje.getY()-25 + persona.height <= cafeActual.getY()-25 + 50)) {
-						puntaje += 10;
-						listaCafes.remove(i);
+			
+				for (int i = 0; i < listaCafes.size(); i++) {
+					listaCafes.get(i).pintar(app, cafeG);
+					Cafe cafeActual = listaCafes.get(i);
+					if ((personaje.getX() -25 >= cafeActual.getX()-20 && personaje.getX() -25 <= cafeActual.getX()-20 + 50)
+							|| (personaje.getX() -25 + 50 >= cafeActual.getX()-20
+									&& personaje.getX()-25 + 50 <= cafeActual.getX()-20 + 50)) {
+						if ((personaje.getY()-25 >= cafeActual.getY()-25
+								&& personaje.getY()-25 <= cafeActual.getY() + 50)
+							|| (personaje.getY()-25 + persona.height >= cafeActual.getY() -25
+									&& personaje.getY()-25 + persona.height <= cafeActual.getY()-25 + 50)) {
+							puntaje += 10;
+							listaCafes.remove(i);
+							if(listaCafes.size()==0) {
+								throw new NoMoreCoffee();
+							}
+						}
 					}
 				}
-			}
+			
 			
 			//Texto del puntaje
 			app.fill(0);
@@ -514,7 +520,7 @@ public class Logica {
 		boolean estado = false;
 		
 		if(!name.equals("") && !user.equals("") && !password.equals("") && !cpassword.equals("")) {
-			System.out.println("entra 1");
+			
 			estado = true;
 		} else {
 			estado = false;
@@ -597,5 +603,90 @@ public class Logica {
 		if (minutos < 0) {
 			estado = 6;
 		}
+	}
+	
+	public void reiniciar(PApplet app) {
+		
+		estado = 2;
+		segundos = 59;
+		minutos = 2;
+		puntaje = 0;
+		inicio = minutos * 60 + segundos + 3;
+
+		muro1 = app.loadImage("Muro1.png");
+		muro2 = app.loadImage("Muro2.png");
+		muro3 = app.loadImage("Muro3.png");
+		muro4 = app.loadImage("Muro4.png");
+		muro5 = app.loadImage("Muro5.png");
+
+		persona = app.loadImage("Personaje.png");
+
+		pantalla = new PImage[9];
+		pantalla[0] = app.loadImage("pantallainicio.jpg");
+		pantalla[1] = app.loadImage("iniciarSesion.jpeg");
+		pantalla[2] = app.loadImage("PantallaRegistro.jpg");
+		pantalla[3] = app.loadImage("Instrucciones1.jpg");
+		pantalla[4] = app.loadImage("Instrucciones2.jpg");
+		pantalla[5] = app.loadImage("PantallaPerdio.jpg");
+		pantalla[6] = app.loadImage("PantallaGano.jpg");
+		pantalla[7] = app.loadImage("PantallaResumen.jpg");
+		pantalla[8] = app.loadImage("PantallaPartidas.jpg");
+
+		nivel = app.loadImage("Nivel1.jpg");
+
+		enemigoI = app.loadImage("Enemigo1.png");
+
+		adornoMatriz = new PImage[5];
+		adornoMatriz[0] = app.loadImage("Arbol.png");
+		adornoMatriz[1] = app.loadImage("Pala.png");
+		adornoMatriz[2] = app.loadImage("Matas.png");
+		adornoMatriz[3] = app.loadImage("Tronco.png");
+		adornoMatriz[4] = app.loadImage("Lago.png");
+
+		botones = new PImage[8];
+		botones[0] = app.loadImage("Boton1.png");
+		botones[1] = app.loadImage("BotonOprimido1.png");
+		botones[2] = app.loadImage("Boton2.png");
+		botones[3] = app.loadImage("BotonOprimido2.png");
+		botones[4] = app.loadImage("BotonPerdio.png");
+		botones[5] = app.loadImage("BotonPerdioOprimido.png");
+		botones[6] = app.loadImage("BotonGano.png");
+		botones[7] = app.loadImage("BotonGanoOprimido.png");
+
+		vida = app.loadImage("Vida.png");
+		cafeG = app.loadImage("Cafe.png");
+
+		vitamina = app.loadImage("Herramienta1.png");
+
+		mapa = new Mapa(muro1, muro2, muro3, muro4, muro5, app);
+		personaje = new Personaje(1, 1, mapa);
+
+		enemigos = new ArrayList<>();
+		enemigos.add(new Enemigo(8, 1, mapa, 0));
+		enemigos.add(new Enemigo(10, 5, mapa, 1));
+		enemigos.add(new Enemigo(4, 10, mapa, 0));
+		enemigos.add(new Enemigo(1, 15, mapa, 1));
+		enemigos.add(new Enemigo(1, 20, mapa, 0));
+		enemigos.add(new Enemigo(2, 22, mapa, 0));
+
+		herramienta = new Herramienta(0, 0);
+		listaHerramienta = new ArrayList<Herramienta>();
+		listaHerramienta.add(new Herramienta(8, 8));
+		listaHerramienta.add(new Herramienta(1, 17));
+		listaHerramienta.add(new Herramienta(10, 22));
+		
+		int randomX = (int)app.random(0,1200);
+		int randomY = (int)app.random(0,70);
+		listaCafes = new ArrayList<>();
+		listaCafes.add(new Cafe(randomX, randomY));
+		listaCafes.add(new Cafe(5, 1));
+		
+		usuarios = new LinkedList<Usuario>();
+		usuarios.add(new Usuario("master", "12345", "12345", "usuarioMaestro", new Partida("3:50", "50")));
+		
+		login = new Login(app);
+		register = new Register(app);
+		
+		ordenarPuntaje = new OrdenarPorPuntaje();
 	}
 }
