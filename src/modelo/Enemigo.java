@@ -8,9 +8,8 @@ public class Enemigo {
 	
 	Logica refLogica;
 	Mapa refMapa;
-	int valorDestino;
-	PImage persona;
-	int dir;
+	int valorDestino, dañoEne, dir;
+	PImage enemigo;
 
 	
 	int x, y, col, fil, vidas;
@@ -25,12 +24,13 @@ public class Enemigo {
 		this.refMapa = refMapa;
 		this.dir = 1;
 		this.tipoDir = tipoDir;
+		this.dañoEne = 1;
 		
 	}
 	
-	public void pintar(PApplet app, PImage persona) {
+	public void pintar(PApplet app, PImage enemigo) {
 		app.imageMode(PConstants.CENTER);
-		app.image(persona, x, y);
+		app.image(enemigo, x, y);
 		
 	}
 	
@@ -113,5 +113,37 @@ public class Enemigo {
 			//System.out.println("enenmi"+" "+ enemi.valorDestino + " " + dir);
 			dir*=-1; // dir = dir * -1  // - * - = + // +* - = -
 		}
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	public int getWidht() {
+		return enemigo.width;
+	}
+
+	public int getHeight() {
+		return enemigo.height;
+	}
+
+	public int getDañoEne() {
+		return dañoEne;
+	}
+
+	public void setDañoEne(int dañoEne) {
+		this.dañoEne = dañoEne;
 	}
 }

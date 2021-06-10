@@ -23,6 +23,7 @@ public class Mapa {
 	PImage muro5;
 	
 	PImage herramienta1;
+	PImage cafeG;
 
 	PApplet app;
 
@@ -382,6 +383,10 @@ public class Mapa {
 		if (herramienta != null) {
 			herramienta.pintar(app, herramienta1);
 		}
+		
+		if (cafe != null) {
+			cafe.pintar(app, cafeG);
+		}
 	}
 
 	public int getTipoMapa(int fil, int col) {
@@ -405,11 +410,33 @@ public class Mapa {
 		return false;
 	}
 	
+	public boolean validarCafe(int px, int py) {
+		if (cafe != null) {
+			double dx = (cafe.getX() - px) * (cafe.getX() - px);
+			double dy = (cafe.getY() - py) * (cafe.getY() - py);
+
+			double resultado = Math.sqrt(dx + dy);
+			if (resultado < 25) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public Herramienta getHerramienta() {
 		if (herramienta != null) {
 			Herramienta tempHerramienta = herramienta;
 			herramienta = null;
 			return tempHerramienta;
+		}
+		return null;
+	}
+	
+	public Cafe getCafe() {
+		if (cafe != null) {
+			Cafe tempCafe = cafe;
+			cafe = null;
+			return tempCafe;
 		}
 		return null;
 	}

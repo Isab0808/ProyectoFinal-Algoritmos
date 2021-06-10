@@ -19,9 +19,11 @@ public class Logica {
 	Personaje personaje;
 	Enemigo enemi;
 	Herramienta herramienta;
+	Cafe cafe;
 	Login login;
 
-	private int estado, segundos, minutos;
+	private int estado, segundos, minutos, puntaje, inicio;
+	private boolean win;
 
 	PImage[] pantalla;
 	PImage[] adornoMatriz;
@@ -35,24 +37,28 @@ public class Logica {
 	PImage muro5;
 
 	PImage nivel;
-	PImage enemigo;
+	PImage enemigoI;
 	PImage persona;
 	PImage vida;
+	PImage cafeG;
 
 	PImage vitamina;
 
 	ArrayList<Herramienta> listaHerramienta;
+	ArrayList<Cafe> listaCafes = new ArrayList<Cafe>();
 	ArrayList<Enemigo> enemigos;
 	
 	LinkedList<Usuario> usuarios;
 	Register register;
-	 OrdenarPorPuntaje ordenarPuntaje;
+	OrdenarPorPuntaje ordenarPuntaje;
 
 	public Logica(PApplet app) {
 
-		estado = 9;
+		estado = 5;
 		segundos = 59;
 		minutos = 2;
+		puntaje = 0;
+		inicio = minutos * 60 + segundos + 3;
 
 		muro1 = app.loadImage("Muro1.png");
 		muro2 = app.loadImage("Muro2.png");
@@ -75,7 +81,7 @@ public class Logica {
 
 		nivel = app.loadImage("Nivel1.jpg");
 
-		enemigo = app.loadImage("Enemigo1.png");
+		enemigoI = app.loadImage("Enemigo1.png");
 
 		adornoMatriz = new PImage[5];
 		adornoMatriz[0] = app.loadImage("Arbol.png");
@@ -95,6 +101,7 @@ public class Logica {
 		botones[7] = app.loadImage("BotonGanoOprimido.png");
 
 		vida = app.loadImage("Vida.png");
+		cafeG = app.loadImage("Cafe.png");
 
 		vitamina = app.loadImage("Herramienta1.png");
 
@@ -114,6 +121,12 @@ public class Logica {
 		listaHerramienta.add(new Herramienta(8, 8));
 		listaHerramienta.add(new Herramienta(1, 17));
 		listaHerramienta.add(new Herramienta(10, 22));
+		
+		int randomX = (int)app.random(0,1200);
+		int randomY = (int)app.random(0,70);
+		listaCafes = new ArrayList<>();
+		listaCafes.add(new Cafe(randomX, randomY));
+		listaCafes.add(new Cafe(5, 1));
 		
 		usuarios = new LinkedList<Usuario>();
 		usuarios.add(new Usuario("master", "12345", "12345", "usuarioMaestro", null));
@@ -182,13 +195,39 @@ public class Logica {
 
 			mapa.pintar();
 			personaje.pintar(app, persona);
+			
+			//Cuando se recojan todos los cafes se indica que el jugador gano la partida
+			//Es decir la lista de Cafes este en 0
+			if(listaCafes.size()==0) {
+				estado = 7;
+			}
 
 			// int index, condicion, accion a srguir
 			// tipo de referencia instancio => lista
 			for (Enemigo enemigo : enemigos) {
-				enemigo.pintar(app, this.enemigo);
+				enemigo.pintar(app, this.enemigoI);
 				enemigos.indexOf(enemigo);
+				
+				/*if ((personaje.getX() >= enemigo.getX() && personaje.getX() <= enemigo.getX() + enemigoI.width)
+						|| (personaje.getX() + persona.width >= enemigo.getX()
+								&& personaje.getX() + persona.width <= enemigo.getX() + enemigoI.width)) {
+					if ((personaje.getY() >= enemigo.getY()
+							&& personaje.getY() <= enemigo.getY() + enemigoI.height)
+							|| (personaje.getY() + enemigoI.height >= enemigo.getY()
+									&& personaje.getY() + enemigo.getHeight() <= enemigo.getY() + enemigoI.height)) {
+						} else if (inicio - 3 > (minutos * 60 + segundos)) {
+							personaje.quitarVida(enemigo.getDañoEne());
+							if (personaje.getVidas() == 0) {
+								estado = 6;
+								win= false;
+							}
+							inicio = minutos * 60 + segundos;
+						}
+					}*/
 			}
+			
+			//Hilo para la direccion en la que se mueven los enemigos, es decir,
+			//Que cambien de direccion cuando lleguen a un muro 
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -237,11 +276,36 @@ public class Logica {
 					}
 				}
 			}
+			
+			// For para pintar los cafes y validar la posicion del personaje y el cafe
+			//Si coinciden se suma al puntaje y se elimina de la lista el cafe
+			for (int i = 0; i < listaCafes.size(); i++) {
+				listaCafes.get(i).pintar(app, cafeG);
+				Cafe cafeActual = listaCafes.get(i);
+				if ((personaje.getX() -25 >= cafeActual.getX()-20 && personaje.getX() -25 <= cafeActual.getX()-20 + 50)
+						|| (personaje.getX() -25 + 50 >= cafeActual.getX()-20
+								&& personaje.getX()-25 + 50 <= cafeActual.getX()-20 + 50)) {
+					if ((personaje.getY()-25 >= cafeActual.getY()-25
+							&& personaje.getY()-25 <= cafeActual.getY() + 50)
+						|| (personaje.getY()-25 + persona.height >= cafeActual.getY() -25
+								&& personaje.getY()-25 + persona.height <= cafeActual.getY()-25 + 50)) {
+						puntaje += 10;
+						listaCafes.remove(i);
+					}
+				}
+			}
+			
+			//Texto del puntaje
+			app.fill(0);
+			app.textSize(20);
+			app.text(puntaje + " x",840, 57);
+			
 			break;
 
 		// Pantalla Perdio
 		case 6:
 			// Imagen Fondo
+			app.imageMode(PConstants.CORNER);
 			app.image(pantalla[5], 0, 0);
 
 			// Imagen Boton
@@ -256,6 +320,7 @@ public class Logica {
 
 		// Pantalla Gano
 		case 7:
+			app.imageMode(PConstants.CORNER);
 			// Imagen Fondo
 			app.image(pantalla[6], 0, 0);
 
@@ -294,7 +359,6 @@ public class Logica {
 					app.text(usuario.getP().getPuntaje(), 150, 100);
 				}
 			} catch (Exception e) {
-				// TODO: handle exception
 				System.out.println("No hay resultados");
 				app.text("No hay resultados", app.width/2, 300);
 			}
@@ -358,6 +422,10 @@ public class Logica {
 			app.textSize(23);
 			app.text(minutos + ":" + segundos, 141, 60);
 		}
+		
+		if (minutos < 0) {
+			estado = 6;
+		}
 	}
 
 	
@@ -372,12 +440,9 @@ public class Logica {
 						login.stopVisualization();
 					}
 				} catch (UsuarioNoExisteException e) {
-					// TODO Auto-generated catch block
 					System.out.println(e.getMessage());
-					
 				}
 			}			
-			
 			
 			break;
 		case 2: 
@@ -395,14 +460,10 @@ public class Logica {
 						
 					}
 				} catch (NoSamePasswordException e) {
-					// TODO Auto-generated catch block
 					System.out.println(e.getMessage());
 				} catch (NoTextInsideException e) {
-					// TODO Auto-generated catch block
 					System.out.println(e.getMessage());
 				}
-					
-				
 			}
 			break;
 		case 3:
