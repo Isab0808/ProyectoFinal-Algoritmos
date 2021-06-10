@@ -49,7 +49,7 @@ public class Logica {
 	ArrayList<Herramienta> listaHerramienta;
 	ArrayList<Cafe> listaCafes = new ArrayList<Cafe>();
 	ArrayList<Enemigo> enemigos;
-	
+
 	LinkedList<Usuario> usuarios;
 	Register register;
 	OrdenarPorPuntaje ordenarPuntaje;
@@ -57,10 +57,9 @@ public class Logica {
 	public Logica(PApplet app) {
 
 		estado = 5;
-		segundos = 59;
-		minutos = 2;
+		segundos = 0;
+		minutos = 0;
 		puntaje = 0;
-		inicio = minutos * 60 + segundos + 3;
 
 		muro1 = app.loadImage("Muro1.png");
 		muro2 = app.loadImage("Muro2.png");
@@ -71,7 +70,7 @@ public class Logica {
 		persona = app.loadImage("Personaje.png");
 
 		pantalla = new PImage[9];
-		pantalla[0] = app.loadImage("pantallainicio.jpg");
+		pantalla[0] = app.loadImage("PantallaInicio.jpg");
 		pantalla[1] = app.loadImage("iniciarSesion.jpeg");
 		pantalla[2] = app.loadImage("PantallaRegistro.jpg");
 		pantalla[3] = app.loadImage("Instrucciones1.jpg");
@@ -92,7 +91,7 @@ public class Logica {
 		adornoMatriz[3] = app.loadImage("Tronco.png");
 		adornoMatriz[4] = app.loadImage("Lago.png");
 
-		botones = new PImage[8];
+		botones = new PImage[13];
 		botones[0] = app.loadImage("Boton1.png");
 		botones[1] = app.loadImage("BotonOprimido1.png");
 		botones[2] = app.loadImage("Boton2.png");
@@ -101,6 +100,11 @@ public class Logica {
 		botones[5] = app.loadImage("BotonPerdioOprimido.png");
 		botones[6] = app.loadImage("BotonGano.png");
 		botones[7] = app.loadImage("BotonGanoOprimido.png");
+		botones[8] = app.loadImage("BotonJugar.png");
+		botones[9] = app.loadImage("BotonJugarOprimido.png");
+		botones[10] = app.loadImage("BotonStart.png");
+		botones[11] = app.loadImage("BotonStartOprimido.png");
+		botones[12] = app.loadImage("BotonRegistrate.png");
 
 		vida = app.loadImage("Vida.png");
 		cafeG = app.loadImage("Cafe.png");
@@ -123,19 +127,19 @@ public class Logica {
 		listaHerramienta.add(new Herramienta(8, 8));
 		listaHerramienta.add(new Herramienta(1, 17));
 		listaHerramienta.add(new Herramienta(10, 22));
-		
-		int randomX = (int)app.random(0,22);
-		int randomY = (int)app.random(0,10);
+
+		int randomX = (int) app.random(0, 22);
+		int randomY = (int) app.random(0, 10);
 		listaCafes = new ArrayList<>();
 		listaCafes.add(new Cafe(randomX, randomY));
 		listaCafes.add(new Cafe(5, 1));
-		
+
 		usuarios = new LinkedList<Usuario>();
 		usuarios.add(new Usuario("master", "12345", "12345", "usuarioMaestro", new Partida("3:50", "50")));
-		
+
 		login = new Login(app);
 		register = new Register(app);
-		
+
 		ordenarPuntaje = new OrdenarPorPuntaje();
 	}
 
@@ -145,19 +149,34 @@ public class Logica {
 
 		// Pantalla inicio
 		case 0:
+			// Imagen Fondo
 			app.image(pantalla[0], 0, 0);
-			
+
+			// Imagen Boton Start
+			app.image(botones[10], 432, 485);
+
+			// Si esta el mouse encima del Boton Start mostrar imagen Boton Oprimido
+			// Esto es mas que todo estetica
+			if (app.mouseX > 432 && app.mouseX < 432 + 267 && app.mouseY > 485 && app.mouseY < 485 + 89) {
+				app.image(botones[11], 432, 485);
+			}
+
 			break;
 
 		// Pantalla Login
 		case 1:
+			//Imagen Fondo
 			app.image(pantalla[1], 0, 0);
 			
+			// Imagen Boton Registrate
+			app.image(botones[12], 489, 518);
+
 			break;
 
 		// Pantalla Registro
 		case 2:
 			app.image(pantalla[2], 0, 0);
+			
 			break;
 
 		// Pantalla Instrucciones 1
@@ -197,10 +216,10 @@ public class Logica {
 
 			mapa.pintar();
 			personaje.pintar(app, persona);
-			
-			//Cuando se recojan todos los cafes se indica que el jugador gano la partida
-			//Es decir la lista de Cafes este en 0
-			if(listaCafes.size()==0) {
+
+			// Cuando se recojan todos los cafes se indica que el jugador gano la partida
+			// Es decir la lista de Cafes este en 0
+			if (listaCafes.size() == 0) {
 				estado = 7;
 			}
 
@@ -209,27 +228,10 @@ public class Logica {
 			for (Enemigo enemigo : enemigos) {
 				enemigo.pintar(app, this.enemigoI);
 				enemigos.indexOf(enemigo);
-				
-				/*if ((personaje.getX() >= enemigo.getX() && personaje.getX() <= enemigo.getX() + enemigoI.width)
-						|| (personaje.getX() + persona.width >= enemigo.getX()
-								&& personaje.getX() + persona.width <= enemigo.getX() + enemigoI.width)) {
-					if ((personaje.getY() >= enemigo.getY()
-							&& personaje.getY() <= enemigo.getY() + enemigoI.height)
-							|| (personaje.getY() + enemigoI.height >= enemigo.getY()
-									&& personaje.getY() + enemigo.getHeight() <= enemigo.getY() + enemigoI.height)) {
-						} else if (inicio - 3 > (minutos * 60 + segundos)) {
-							personaje.quitarVida(enemigo.getDañoEne());
-							if (personaje.getVidas() == 0) {
-								estado = 6;
-								win= false;
-							}
-							inicio = minutos * 60 + segundos;
-						}
-					}*/
 			}
-			
-			//Hilo para la direccion en la que se mueven los enemigos, es decir,
-			//Que cambien de direccion cuando lleguen o chocan con un muro 
+
+			// Hilo para la direccion en la que se mueven los enemigos, es decir,
+			// Que cambien de direccion cuando lleguen o chocan con un muro
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -278,64 +280,64 @@ public class Logica {
 					}
 				}
 			}
-			
+
 			// For para pintar los cafes y validar la posicion del personaje y el cafe
-			//Si coinciden se suma al puntaje y se elimina de la lista el cafe
-			
-				for (int i = 0; i < listaCafes.size(); i++) {
-					listaCafes.get(i).pintar(app, cafeG);
-					Cafe cafeActual = listaCafes.get(i);
-					if ((personaje.getX() -25 >= cafeActual.getX()-20 && personaje.getX() -25 <= cafeActual.getX()-20 + 50)
-							|| (personaje.getX() -25 + 50 >= cafeActual.getX()-20
-									&& personaje.getX()-25 + 50 <= cafeActual.getX()-20 + 50)) {
-						if ((personaje.getY()-25 >= cafeActual.getY()-25
-								&& personaje.getY()-25 <= cafeActual.getY() + 50)
-							|| (personaje.getY()-25 + persona.height >= cafeActual.getY() -25
-									&& personaje.getY()-25 + persona.height <= cafeActual.getY()-25 + 50)) {
-							puntaje += 10;
-							listaCafes.remove(i);
-							if(listaCafes.size()==0) {
-								throw new NoMoreCoffee();
-							}
+			// Si coinciden se suma al puntaje y se elimina de la lista el cafe
+
+			for (int i = 0; i < listaCafes.size(); i++) {
+				listaCafes.get(i).pintar(app, cafeG);
+				Cafe cafeActual = listaCafes.get(i);
+				if ((personaje.getX() - 25 >= cafeActual.getX() - 20
+						&& personaje.getX() - 25 <= cafeActual.getX() - 20 + 50)
+						|| (personaje.getX() - 25 + 50 >= cafeActual.getX() - 20
+								&& personaje.getX() - 25 + 50 <= cafeActual.getX() - 20 + 50)) {
+					if ((personaje.getY() - 25 >= cafeActual.getY() - 25
+							&& personaje.getY() - 25 <= cafeActual.getY() + 50)
+							|| (personaje.getY() - 25 + persona.height >= cafeActual.getY() - 25
+									&& personaje.getY() - 25 + persona.height <= cafeActual.getY() - 25 + 50)) {
+						puntaje += 10;
+						listaCafes.remove(i);
+						if (listaCafes.size() == 0) {
+							throw new NoMoreCoffee();
 						}
 					}
 				}
-			
-			
-			//Texto del puntaje
+			}
+
+			// Texto del puntaje
 			app.fill(0);
 			app.textSize(20);
-			app.text(puntaje + " x",840, 57);
-			
-			//For para perder vida cuando los enemigos toquen al personaje principal
-			
-			for(final Enemigo e: enemigos) {
-				if((e.getX()>=personaje.getX()&& e.getX()<=personaje.getX()+persona.width)&&(e.getY()>=personaje.getY() && e.getY()<=personaje.getY()+persona.height)) {
+			app.text(puntaje + " x", 840, 57);
 
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						System.out.println(personaje.vidas +" "+e.getDañoEne());
-						try {
-							if(app.frameCount%90==0){ 
-								personaje.quitarVida(e.getDañoEne());
+			// For para perder vida cuando los enemigos toquen al personaje principal
+
+			for (final Enemigo e : enemigos) {
+				if ((e.getX() >= personaje.getX() && e.getX() <= personaje.getX() + persona.width)
+						&& (e.getY() >= personaje.getY() && e.getY() <= personaje.getY() + persona.height)) {
+
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							System.out.println(personaje.vidas + " " + e.getDañoEne());
+							try {
+								if (app.frameCount % 90 == 0) {
+									personaje.quitarVida(e.getDañoEne());
+								}
+								Thread.sleep(1500);
+							} catch (InterruptedException e1) {
+								e1.printStackTrace();
 							}
-							Thread.sleep(1500);
-						} catch (InterruptedException e1) {
-							e1.printStackTrace();
 						}
-					}
-				} ).start();
+					}).start();
 				}
 			}
-			
+
 			// Perder el juego
-			
-			if (personaje.getVidas()<=0) {
+
+			if (personaje.getVidas() <= 0) {
 				estado = 6;
 			}
-			
-				
+
 			break;
 
 		// Pantalla Perdio
@@ -366,7 +368,7 @@ public class Logica {
 			// Si esta el mouse encima del Boton mostrar imagen Boton Oprimido
 			// Esto es mas que todo estetica
 			if (app.mouseX > 507 && app.mouseX < 507 + 186 && app.mouseY > 479 && app.mouseY < 479 + 70) {
-				app.image(botones[7], 507, 479); 
+				app.image(botones[7], 507, 479);
 			}
 
 			break;
@@ -376,65 +378,102 @@ public class Logica {
 			// Imagen Fondo
 			app.image(pantalla[7], 0, 0);
 
-			app.text(puntaje,app.width/2 , 350);
-			app.text(minutos+":"+segundos,app.width/2+150 , 350);
-			// Imagen Boton
-			app.image(botones[6], 504, 503);
+			if (segundos <= 9) {
+				app.text(minutos + ":0" + segundos, 690, 315);
+			} else if (segundos > 9) {
+				app.text(minutos + ":" + segundos, 690, 315);
+			}
 
-			// Si esta el mouse encima del Boton mostrar imagen Boton Oprimido
+			app.text(puntaje, 515, 315);
+
+			// Imagen Boton Ok
+			app.image(botones[4], 504, 503);
+			// Imagen Boton Jugar
+			app.image(botones[8], 748, 503);
+
+			// Si esta el mouse encima del Boton Ok mostrar imagen Boton Oprimido
 			// Esto es mas que todo estetica
 			if (app.mouseX > 504 && app.mouseX < 504 + 231 && app.mouseY > 503 && app.mouseY < 503 + 52) {
-				app.image(botones[7], 504, 503);
+				app.image(botones[5], 504, 503);
+			}
+			// Si esta el mouse encima del Boton Jugar mostrar imagen Boton Oprimido
+			// Esto es mas que todo estetica
+			if (app.mouseX > 748 && app.mouseX < 748 + 231 && app.mouseY > 503 && app.mouseY < 503 + 52) {
+				app.image(botones[9], 748, 503);
 			}
 
 			break;
-			//Pantalla puntajes
+		// Pantalla Partidas
 		case 9:
+			// Imagen Fondo
 			app.image(pantalla[8], 0, 0);
+
+			// Imagen Boton Ok
+			app.image(botones[4], 500, 553);
+
+			// Si esta el mouse encima del Boton Ok mostrar imagen Boton Oprimido
+			// Esto es mas que todo estetica
+			if (app.mouseX > 500 && app.mouseX < 500 + 231 && app.mouseY > 553 && app.mouseY < 553 + 52) {
+				app.image(botones[5], 500, 553);
+			}
 			try {
 				for (Usuario usuario : usuarios) {
-					app.text(usuario.getNombre(), 350, 150+ (50*usuarios.indexOf(usuario)));
-					app.text(usuario.getP().getTime(), 500,150+ (50*usuarios.indexOf(usuario)));
-					app.text(usuario.getP().getPuntaje(), 650,150+ (50*usuarios.indexOf(usuario)));
+					app.text(usuario.getNombre(), 587, 300 + (50 * usuarios.indexOf(usuario)));
+					app.text("--------------------------    " + usuario.getP().getTime(), 745,
+							300 + (50 * usuarios.indexOf(usuario)));
+					app.text(usuario.getP().getPuntaje(), 975, 300 + (50 * usuarios.indexOf(usuario)));
 				}
 			} catch (Exception e) {
-				
-				app.text("No hay resultados", app.width/2, 300);
+
+				app.text("No hay resultados", app.width / 2, 300);
 			}
-			
+
 			break;
 		}
 	}
 
 	public void clic(PApplet app) {
 		switch (estado) {
+		case 0:
+			//Pantalla Inicio
+			if (app.mouseX > 432 && app.mouseX < 432 + 267 && app.mouseY > 485 && app.mouseY < 485 + 89) {
+				estado = 1;
+			}
+			break;
 		case 1:
-			if(login.getB1().isMouseOver(app.mouseX, app.mouseY)) {
+		//Pantalla Login
+			if (app.mouseX > 489 && app.mouseX < 489 + 267 && app.mouseY > 518 && app.mouseY < 518 + 74.64) {
+				estado = 2;
+			}
+			
+			if (login.getB1().isMouseOver(app.mouseX, app.mouseY)) {
 				try {
 					validarUsuario(login.getInput().getValue(), login.getPassword().getValue());
-					if(validarUsuario(login.getInput().getValue(), login.getPassword().getValue())) {
+					if (validarUsuario(login.getInput().getValue(), login.getPassword().getValue())) {
 						estado = 3;
 						login.stopVisualization();
 					}
 				} catch (UsuarioNoExisteException e) {
 					System.out.println(e.getMessage());
 				}
-			}			
-			
+			}
+
 			break;
-		case 2: 
-			if(register.getB1().isMouseOver(app.mouseX, app.mouseY)) {
+		case 2:
+		//Pantalla Registro
+			if (register.getB1().isMouseOver(app.mouseX, app.mouseY)) {
 				try {
 					validarContraseñas(register.getPassword().getValue(), register.getCpassword().getValue());
-					if(validarContraseñas(register.getPassword().getValue(), register.getCpassword().getValue())) {
-						
-						if(validarCamposLlenos(register.getName().getValue(), register.getInput().getValue(),
+					if (validarContraseñas(register.getPassword().getValue(), register.getCpassword().getValue())) {
+
+						if (validarCamposLlenos(register.getName().getValue(), register.getInput().getValue(),
 								register.getPassword().getValue(), register.getCpassword().getValue())) {
-							añadirUsuarios(register.getInput().getValue(), register.getPassword().getValue(), register.getPassword().getValue(), register.getName().getValue());
+							añadirUsuarios(register.getInput().getValue(), register.getPassword().getValue(),
+									register.getPassword().getValue(), register.getName().getValue());
 							estado = 3;
 							register.stopVisualization();
 						}
-						
+
 					}
 				} catch (NoSamePasswordException e) {
 					System.out.println(e.getMessage());
@@ -474,30 +513,43 @@ public class Logica {
 			break;
 		case 8:
 			// Pantalla Resumen
-			// Cuando se le de clic en el boton Ok pasar a la pantalla de las instrucciones 1
+			// Cuando se le de clic en el boton Ok pasar a la pantalla de partidas
+			// 1
 			if (app.mouseX > 504 && app.mouseX < 504 + 231 && app.mouseY > 503 && app.mouseY < 503 + 52) {
-				usuarios.get(usuarios.size()-1).setP(new Partida(minutos+":"+segundos,  puntaje+""));
+				usuarios.get(usuarios.size() - 1).setP(new Partida(minutos + ":" + segundos, puntaje + ""));
 				estado = 9;
 			}
+			// Cuando se le de clic en el boton Jugar pasar a la pantalla de escenario
+			if (app.mouseX > 748 && app.mouseX < 748 + 231 && app.mouseY > 503 && app.mouseY < 503 + 52) {
+				reiniciar(app);
+				estado = 5;
+			}
 			break;
+
+		case 9:
+			// Pantalla Partidas
+			// Si esta el mouse encima del Boton Ok pasar a la pantalla escenario
+			if (app.mouseX > 500 && app.mouseX < 500 + 231 && app.mouseY > 553 && app.mouseY < 553 + 52) {
+				estado = 5;
+			}
 		}
 	}
-	
-	public boolean validarUsuario(String user,String password) throws UsuarioNoExisteException {
+
+	public boolean validarUsuario(String user, String password) throws UsuarioNoExisteException {
 		for (Usuario usuario : usuarios) {
-			if(user.equals(usuario.getUsuario()) && password.equals(usuario.getContraseña())) {
+			if (user.equals(usuario.getUsuario()) && password.equals(usuario.getContraseña())) {
 				return true;
 			} else {
 				throw new UsuarioNoExisteException();
 			}
 		}
-		return false;	
+		return false;
 	}
-	
-	public boolean validarContraseñas(String c1, String c2) throws NoSamePasswordException{
+
+	public boolean validarContraseñas(String c1, String c2) throws NoSamePasswordException {
 		boolean estado = false;
-		
-		if(c1.equals(c2)) {
+
+		if (c1.equals(c2)) {
 			estado = true;
 		} else {
 			estado = false;
@@ -505,37 +557,38 @@ public class Logica {
 		}
 		return estado;
 	}
-	
-	public void añadirUsuarios(String usuario,String contraseña, String confirmarContraseña,String nombre) {
+
+	public void añadirUsuarios(String usuario, String contraseña, String confirmarContraseña, String nombre) {
 		usuarios.add(new Usuario(usuario, contraseña, confirmarContraseña, nombre, null));
 	}
-	
-	public boolean validarCamposLlenos(String name,String user,String password,String cpassword) throws NoTextInsideException {
+
+	public boolean validarCamposLlenos(String name, String user, String password, String cpassword)
+			throws NoTextInsideException {
 		String faltante;
-		faltante = name.equals("")? "name" : "";
-		faltante = user.equals("")? "user" : "";
-		faltante = password.equals("")? "password" : "";
-		faltante = cpassword.equals("")? "cpassword" : "";
-		
+		faltante = name.equals("") ? "name" : "";
+		faltante = user.equals("") ? "user" : "";
+		faltante = password.equals("") ? "password" : "";
+		faltante = cpassword.equals("") ? "cpassword" : "";
+
 		boolean estado = false;
-		
-		if(!name.equals("") && !user.equals("") && !password.equals("") && !cpassword.equals("")) {
-			
+
+		if (!name.equals("") && !user.equals("") && !password.equals("") && !cpassword.equals("")) {
+
 			estado = true;
 		} else {
 			estado = false;
 			throw new NoTextInsideException(faltante);
 		}
-		
+
 		return estado;
 	}
-	
+
 	public void ordenarPuntajes(char key) {
 		switch (key) {
 		case 'z':
 			Collections.sort(usuarios);
 			break;
-		case 'x': 
+		case 'x':
 			Collections.sort(usuarios, ordenarPuntaje);
 			break;
 
@@ -543,7 +596,7 @@ public class Logica {
 			break;
 		}
 	}
-	
+
 	public Personaje getPersonaje() {
 		return personaje;
 	}
@@ -580,11 +633,11 @@ public class Logica {
 
 	public void temporizador(PApplet app) {
 		if (app.frameCount % 60 == 0 && minutos >= 0) {
-			segundos--;
+			segundos++;
 		}
-		if (segundos == 0) {
-			minutos--;
-			segundos = 59;
+		if (segundos == 60) {
+			minutos++;
+			segundos = 0;
 		}
 		if (minutos < 0) {
 			app.fill(255);
@@ -599,19 +652,14 @@ public class Logica {
 			app.textSize(23);
 			app.text(minutos + ":" + segundos, 141, 60);
 		}
-		
-		if (minutos < 0) {
-			estado = 6;
-		}
 	}
-	
+
 	public void reiniciar(PApplet app) {
-		
-		estado = 2;
-		segundos = 59;
-		minutos = 2;
+
+		estado = 5;
+		segundos = 0;
+		minutos = 0;
 		puntaje = 0;
-		inicio = minutos * 60 + segundos + 3;
 
 		muro1 = app.loadImage("Muro1.png");
 		muro2 = app.loadImage("Muro2.png");
@@ -643,7 +691,7 @@ public class Logica {
 		adornoMatriz[3] = app.loadImage("Tronco.png");
 		adornoMatriz[4] = app.loadImage("Lago.png");
 
-		botones = new PImage[8];
+		botones = new PImage[10];
 		botones[0] = app.loadImage("Boton1.png");
 		botones[1] = app.loadImage("BotonOprimido1.png");
 		botones[2] = app.loadImage("Boton2.png");
@@ -652,6 +700,8 @@ public class Logica {
 		botones[5] = app.loadImage("BotonPerdioOprimido.png");
 		botones[6] = app.loadImage("BotonGano.png");
 		botones[7] = app.loadImage("BotonGanoOprimido.png");
+		botones[8] = app.loadImage("BotonJugar.png");
+		botones[9] = app.loadImage("BotonJugarOprimido.png");
 
 		vida = app.loadImage("Vida.png");
 		cafeG = app.loadImage("Cafe.png");
@@ -674,19 +724,19 @@ public class Logica {
 		listaHerramienta.add(new Herramienta(8, 8));
 		listaHerramienta.add(new Herramienta(1, 17));
 		listaHerramienta.add(new Herramienta(10, 22));
-		
-		int randomX = (int)app.random(0,1200);
-		int randomY = (int)app.random(0,70);
+
+		int randomX = (int) app.random(0, 1200);
+		int randomY = (int) app.random(0, 70);
 		listaCafes = new ArrayList<>();
 		listaCafes.add(new Cafe(randomX, randomY));
 		listaCafes.add(new Cafe(5, 1));
-		
+
 		usuarios = new LinkedList<Usuario>();
 		usuarios.add(new Usuario("master", "12345", "12345", "usuarioMaestro", new Partida("3:50", "50")));
-		
+
 		login = new Login(app);
 		register = new Register(app);
-		
+
 		ordenarPuntaje = new OrdenarPorPuntaje();
 	}
 }

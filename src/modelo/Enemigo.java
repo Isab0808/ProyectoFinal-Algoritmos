@@ -18,7 +18,6 @@ public class Enemigo {
 	public Enemigo(int fil, int col, Mapa refMapa, int tipoDir) {
 		this.col = col;
 		this.fil = fil;
-		this.vidas = 1;
 		this.x = 25 + (col * 50);
 		this.y = 25 + (fil * 50) +100;
 		this.refMapa = refMapa;
@@ -31,11 +30,9 @@ public class Enemigo {
 	public void pintar(PApplet app, PImage enemigoI) {
 		app.imageMode(PConstants.CENTER);
 		app.image(enemigoI, x, y);
-		
 	}
 	
 	public void mover(String dir) {
-
 		valorDestino = 5;
 		switch (dir) {
 		case "arriba":
@@ -44,9 +41,7 @@ public class Enemigo {
 				fil = fil - 1;
 				this.x = 25 + (col * 50);
 				this.y = 25 + (fil * 50)+100;
-				
 			}
-			System.out.println(valorDestino);
 			break;
 
 		case "abajo":
@@ -56,7 +51,6 @@ public class Enemigo {
 				
 				this.x = 25 + (col * 50);
 				this.y = 25 + (fil * 50)+100;
-				
 			}
 			break;
 
@@ -66,7 +60,6 @@ public class Enemigo {
 				col = col + 1;
 				this.x = 25 + (col * 50);
 				this.y = 25 + (fil * 50)+100;
-				
 			}
 			break;
 
@@ -76,7 +69,6 @@ public class Enemigo {
 				col = col - 1;
 				this.x = 25 + (col * 50);
 				this.y = 25 + (fil * 50)+100;
-				
 			}
 			break;
 		}
@@ -108,9 +100,7 @@ public class Enemigo {
 			break;
 		}
 		
-		
 		if(valorDestino!=5) {
-			//System.out.println("enenmi"+" "+ enemi.valorDestino + " " + dir);
 			dir*=-1; // dir = dir * -1  // - * - = + // +* - = -
 		}
 	}

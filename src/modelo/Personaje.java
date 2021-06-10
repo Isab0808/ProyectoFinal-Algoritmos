@@ -84,12 +84,12 @@ public class Personaje {
 
 	public void darVida() {
 		if (vidas < 4) {
-			vidas+=1;
+			vidas++;
 		}
 	}
 
 	public void quitarVida(int vida) {
-		vidas -= 1;
+		vidas --;
 	}
 
 	public int getVidas() {
