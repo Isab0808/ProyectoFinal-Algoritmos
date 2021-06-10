@@ -1,8 +1,4 @@
 package modelo;
-
-
-
-import interfascia.GUIComponent;
 import interfascia.GUIController;
 
 import interfascia.IFButton;

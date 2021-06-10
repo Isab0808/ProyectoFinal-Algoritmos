@@ -2,7 +2,6 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 
 import exception.NoSamePasswordException;
@@ -12,6 +11,8 @@ import ordenamiento.OrdenarPorPuntaje;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
+
+import modelo.Login;
 
 public class Logica {
 
@@ -54,7 +55,7 @@ public class Logica {
 
 	public Logica(PApplet app) {
 
-		estado = 5;
+		estado = 2;
 		segundos = 59;
 		minutos = 2;
 		puntaje = 0;
@@ -129,7 +130,7 @@ public class Logica {
 		listaCafes.add(new Cafe(5, 1));
 		
 		usuarios = new LinkedList<Usuario>();
-		usuarios.add(new Usuario("master", "12345", "12345", "usuarioMaestro", null));
+		usuarios.add(new Usuario("master", "12345", "12345", "usuarioMaestro", new Partida("3:50", "50")));
 		
 		login = new Login(app);
 		register = new Register(app);
@@ -369,6 +370,8 @@ public class Logica {
 			// Imagen Fondo
 			app.image(pantalla[7], 0, 0);
 
+			app.text(puntaje,app.width/2 , 350);
+			app.text(minutos+":"+segundos,app.width/2+150 , 350);
 			// Imagen Boton
 			app.image(botones[6], 504, 503);
 
@@ -379,16 +382,17 @@ public class Logica {
 			}
 
 			break;
+			//Pantalla puntajes
 		case 9:
 			app.image(pantalla[8], 0, 0);
 			try {
 				for (Usuario usuario : usuarios) {
-					app.text(usuario.getNombre(), 50, 100);
-					app.text(usuario.getP().getTime(), 100, 100);
-					app.text(usuario.getP().getPuntaje(), 150, 100);
+					app.text(usuario.getNombre(), 350, 150+ (50*usuarios.indexOf(usuario)));
+					app.text(usuario.getP().getTime(), 500,150+ (50*usuarios.indexOf(usuario)));
+					app.text(usuario.getP().getPuntaje(), 650,150+ (50*usuarios.indexOf(usuario)));
 				}
 			} catch (Exception e) {
-				System.out.println("No hay resultados");
+				
 				app.text("No hay resultados", app.width/2, 300);
 			}
 			
@@ -420,7 +424,7 @@ public class Logica {
 						
 						if(validarCamposLlenos(register.getName().getValue(), register.getInput().getValue(),
 								register.getPassword().getValue(), register.getCpassword().getValue())) {
-							
+							añadirUsuarios(register.getInput().getValue(), register.getPassword().getValue(), register.getPassword().getValue(), register.getName().getValue());
 							estado = 3;
 							register.stopVisualization();
 						}
@@ -466,7 +470,8 @@ public class Logica {
 			// Pantalla Resumen
 			// Cuando se le de clic en el boton Ok pasar a la pantalla de las instrucciones 1
 			if (app.mouseX > 504 && app.mouseX < 504 + 231 && app.mouseY > 503 && app.mouseY < 503 + 52) {
-				estado = 3;
+				usuarios.get(usuarios.size()-1).setP(new Partida(minutos+":"+segundos,  puntaje+""));
+				estado = 9;
 			}
 			break;
 		}
