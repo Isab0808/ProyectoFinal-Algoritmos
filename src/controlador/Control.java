@@ -30,6 +30,19 @@ public class Control {
 		}
 	}
 	
+	public void ordenar(char key) {
+		switch (key) {
+		case 'z':
+			logica.ordenarPuntajes('z');
+			break;
+		case 'x':
+			logica.ordenarPuntajes('x');
+			break;
+		default:
+			break;
+		}
+	}
+	
 	public void clic (PApplet app) {
 		logica.clic(app);
 	}

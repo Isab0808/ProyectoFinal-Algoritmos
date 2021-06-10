@@ -34,5 +34,6 @@ public class Main extends PApplet {
 	
 	public void keyPressed() {
 		control.moverPersonaje(key);
+		control.ordenar(key);
 	}
 }
