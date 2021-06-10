@@ -227,7 +227,7 @@ public class Logica {
 			}
 			
 			//Hilo para la direccion en la que se mueven los enemigos, es decir,
-			//Que cambien de direccion cuando lleguen a un muro 
+			//Que cambien de direccion cuando lleguen o chocan con un muro 
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -367,68 +367,6 @@ public class Logica {
 		}
 	}
 
-	public Personaje getPersonaje() {
-		return personaje;
-	}
-
-	public void setPersonaje(Personaje personaje) {
-		this.personaje = personaje;
-	}
-
-	// Objetos decorativos que van encima de la matriz
-	public void pintarAdornos(PApplet app) {
-		app.image(adornoMatriz[0], 89, 309);
-		app.image(adornoMatriz[0], 140, 415);
-		app.image(adornoMatriz[0], 307, 380);
-		app.image(adornoMatriz[0], 405, 164);
-		app.image(adornoMatriz[0], 392, 256);
-		app.image(adornoMatriz[0], 545, 306);
-		app.image(adornoMatriz[0], 638, 407);
-		app.image(adornoMatriz[0], 784, 314);
-
-		app.image(adornoMatriz[4], 875, 400);
-
-		app.image(adornoMatriz[3], 820, 231);
-		app.image(adornoMatriz[3], 880, 231);
-		app.image(adornoMatriz[3], 845, 260);
-
-		app.image(adornoMatriz[2], 567, 200);
-		app.image(adornoMatriz[2], 515, 265);
-		app.image(adornoMatriz[2], 600, 265);
-		app.image(adornoMatriz[2], 843, 465);
-		app.image(adornoMatriz[2], 919, 465);
-
-		app.image(adornoMatriz[1], 297, 206);
-	}
-
-	public void temporizador(PApplet app) {
-		if (app.frameCount % 60 == 0 && minutos >= 0) {
-			segundos--;
-		}
-		if (segundos == 0) {
-			minutos--;
-			segundos = 59;
-		}
-		if (minutos < 0) {
-			app.fill(255);
-			app.textSize(23);
-			app.text("0:00", 141, 60);
-		} else if (segundos <= 9) {
-			app.fill(255);
-			app.textSize(23);
-			app.text(minutos + ":0" + segundos, 141, 60);
-		} else if (segundos > 9) {
-			app.fill(255);
-			app.textSize(23);
-			app.text(minutos + ":" + segundos, 141, 60);
-		}
-		
-		if (minutos < 0) {
-			estado = 6;
-		}
-	}
-
-	
 	public void clic(PApplet app) {
 		switch (estado) {
 		case 1:
@@ -513,22 +451,18 @@ public class Logica {
 				throw new UsuarioNoExisteException();
 			}
 		}
-		return false;
-		
+		return false;	
 	}
 	
 	public boolean validarContraseñas(String c1, String c2) throws NoSamePasswordException{
 		boolean estado = false;
-		//c1.equals(c2)? true : throw new NoSamePasswordException();
 		
 		if(c1.equals(c2)) {
 			estado = true;
 		} else {
 			estado = false;
 			throw new NoSamePasswordException();
-			
 		}
-		
 		return estado;
 	}
 	
@@ -567,6 +501,67 @@ public class Logica {
 
 		default:
 			break;
+		}
+	}
+	
+	public Personaje getPersonaje() {
+		return personaje;
+	}
+
+	public void setPersonaje(Personaje personaje) {
+		this.personaje = personaje;
+	}
+
+	// Objetos decorativos que van encima de la matriz
+	public void pintarAdornos(PApplet app) {
+		app.image(adornoMatriz[0], 89, 309);
+		app.image(adornoMatriz[0], 140, 415);
+		app.image(adornoMatriz[0], 307, 380);
+		app.image(adornoMatriz[0], 405, 164);
+		app.image(adornoMatriz[0], 392, 256);
+		app.image(adornoMatriz[0], 545, 306);
+		app.image(adornoMatriz[0], 638, 407);
+		app.image(adornoMatriz[0], 784, 314);
+
+		app.image(adornoMatriz[4], 875, 400);
+
+		app.image(adornoMatriz[3], 820, 231);
+		app.image(adornoMatriz[3], 880, 231);
+		app.image(adornoMatriz[3], 845, 260);
+
+		app.image(adornoMatriz[2], 567, 200);
+		app.image(adornoMatriz[2], 515, 265);
+		app.image(adornoMatriz[2], 600, 265);
+		app.image(adornoMatriz[2], 843, 465);
+		app.image(adornoMatriz[2], 919, 465);
+
+		app.image(adornoMatriz[1], 297, 206);
+	}
+
+	public void temporizador(PApplet app) {
+		if (app.frameCount % 60 == 0 && minutos >= 0) {
+			segundos--;
+		}
+		if (segundos == 0) {
+			minutos--;
+			segundos = 59;
+		}
+		if (minutos < 0) {
+			app.fill(255);
+			app.textSize(23);
+			app.text("0:00", 141, 60);
+		} else if (segundos <= 9) {
+			app.fill(255);
+			app.textSize(23);
+			app.text(minutos + ":0" + segundos, 141, 60);
+		} else if (segundos > 9) {
+			app.fill(255);
+			app.textSize(23);
+			app.text(minutos + ":" + segundos, 141, 60);
+		}
+		
+		if (minutos < 0) {
+			estado = 6;
 		}
 	}
 }
