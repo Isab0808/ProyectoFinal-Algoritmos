@@ -9,7 +9,7 @@ public class Enemigo {
 	Logica refLogica;
 	Mapa refMapa;
 	int valorDestino, dañoEne, dir;
-	PImage enemigo;
+	PImage enemigoI;
 
 	
 	int x, y, col, fil, vidas;
@@ -28,9 +28,9 @@ public class Enemigo {
 		
 	}
 	
-	public void pintar(PApplet app, PImage enemigo) {
+	public void pintar(PApplet app, PImage enemigoI) {
 		app.imageMode(PConstants.CENTER);
-		app.image(enemigo, x, y);
+		app.image(enemigoI, x, y);
 		
 	}
 	
@@ -132,11 +132,11 @@ public class Enemigo {
 	}
 	
 	public int getWidht() {
-		return enemigo.width;
+		return enemigoI.width;
 	}
 
 	public int getHeight() {
-		return enemigo.height;
+		return enemigoI.height;
 	}
 
 	public int getDañoEne() {

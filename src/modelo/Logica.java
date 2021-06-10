@@ -300,6 +300,35 @@ public class Logica {
 			app.textSize(20);
 			app.text(puntaje + " x",840, 57);
 			
+			//For para perder vida cuando los enemigos toquen al personaje principal
+			
+			for(final Enemigo e: enemigos) {
+				if((e.getX()>=personaje.getX()&& e.getX()<=personaje.getX()+persona.width)&&(e.getY()>=personaje.getY() && e.getY()<=personaje.getY()+persona.height)) {
+
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						System.out.println(personaje.vidas +" "+e.getDañoEne());
+						try {
+							if(app.frameCount%90==0){ 
+								personaje.quitarVida(e.getDañoEne());
+							}
+							Thread.sleep(1500);
+						} catch (InterruptedException e1) {
+							e1.printStackTrace();
+						}
+					}
+				} ).start();
+				}
+			}
+			
+			// Perder el juego
+			
+			if (personaje.getVidas()<=0) {
+				estado = 6;
+			}
+			
+				
 			break;
 
 		// Pantalla Perdio
