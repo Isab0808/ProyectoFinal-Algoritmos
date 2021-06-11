@@ -53,6 +53,8 @@ public class Logica {
 	LinkedList<Usuario> usuarios;
 	Register register;
 	OrdenarPorPuntaje ordenarPuntaje;
+	private Button btnIniciarSesion;
+	private Button btnRegistro;
 
 	public Logica(PApplet app) {
 
@@ -137,10 +139,12 @@ public class Logica {
 		usuarios = new LinkedList<Usuario>();
 		usuarios.add(new Usuario("master", "12345", "12345", "usuarioMaestro", new Partida("3:50", "50")));
 
-		login = new Login(app);
-		register = new Register(app);
+		login = new Login(app, botones[12]);
+		register = new Register(app,botones[12]);
 
 		ordenarPuntaje = new OrdenarPorPuntaje();
+		btnIniciarSesion = new Button(app, app.width/2-150, 600, 200, 75, 0, "Iniciar Sesión");
+		btnRegistro = new Button(app, app.width/2+150, 600, 200, 75, 0, "Registro");
 	}
 
 	public void pintarPantalla(final PApplet app) throws NoMoreCoffee {
@@ -149,38 +153,42 @@ public class Logica {
 
 		// Pantalla inicio
 		case 0:
+			app.imageMode(PConstants.CORNER);
 			// Imagen Fondo
 			app.image(pantalla[0], 0, 0);
 
 			// Imagen Boton Start
-			app.image(botones[10], 432, 485);
-
-			// Si esta el mouse encima del Boton Start mostrar imagen Boton Oprimido
-			// Esto es mas que todo estetica
-			if (app.mouseX > 432 && app.mouseX < 432 + 267 && app.mouseY > 485 && app.mouseY < 485 + 89) {
-				app.image(botones[11], 432, 485);
-			}
+			
+			// aqui se agregaron los botones para ir a registro o pantalla
+			btnIniciarSesion.pintar();
+			btnRegistro.pintar();
 
 			break;
 
 		// Pantalla Login
 		case 1:
+			app.imageMode(PConstants.CORNER);
 			//Imagen Fondo
 			app.image(pantalla[1], 0, 0);
 			
-			// Imagen Boton Registrate
-			app.image(botones[12], 489, 518);
+			
 
+			//btn pasar
+			login.pintar();
 			break;
 
 		// Pantalla Registro
 		case 2:
+			app.imageMode(PConstants.CORNER);
 			app.image(pantalla[2], 0, 0);
 			
+			//btn pasar
+			register.pintar();
 			break;
 
 		// Pantalla Instrucciones 1
 		case 3:
+			app.imageMode(PConstants.CORNER);
 			// Imagen Fondo
 			app.image(pantalla[3], 0, 0);
 
@@ -196,6 +204,7 @@ public class Logica {
 
 		// Pantalla Instrucciones 2
 		case 4:
+			app.imageMode(PConstants.CORNER);
 			// Imagen Fondo
 			app.image(pantalla[4], 0, 0);
 
@@ -433,20 +442,46 @@ public class Logica {
 	}
 
 	public void clic(PApplet app) {
+		
+		//aqui se evita q el form aparezca donde quiera
+		if(estado==1) {
+			if(!login.isOnScreen()) {
+				login.continueVisualization();
+			}
+			
+		} else {
+			login.stopVisualization();
+		}
+		
+		if(estado==2) {
+			if(!register.isOnScreen()) {
+				register.continueVisualization();
+			}
+			
+		} else {
+			register.stopVisualization();
+		}
+		
+		//switch de estado
 		switch (estado) {
 		case 0:
 			//Pantalla Inicio
-			if (app.mouseX > 432 && app.mouseX < 432 + 267 && app.mouseY > 485 && app.mouseY < 485 + 89) {
+		
+			//aqui se le ayude lo que hacen los botones cuando se les hace clic
+			//btn iniciar sesión == estado =2
+			if(btnIniciarSesion.isHover()) {
 				estado = 1;
 			}
+			if(btnRegistro.isHover()) {
+				estado = 2;
+			}
+			// si,necesito ver si funciona la desactivación, y ps tmb
 			break;
 		case 1:
 		//Pantalla Login
-			if (app.mouseX > 489 && app.mouseX < 489 + 267 && app.mouseY > 518 && app.mouseY < 518 + 74.64) {
-				estado = 2;
-			}
+
 			
-			if (login.getB1().isMouseOver(app.mouseX, app.mouseY)) {
+			if (login.getB1().isHover()) {
 				try {
 					validarUsuario(login.getInput().getValue(), login.getPassword().getValue());
 					if (validarUsuario(login.getInput().getValue(), login.getPassword().getValue())) {
@@ -461,7 +496,7 @@ public class Logica {
 			break;
 		case 2:
 		//Pantalla Registro
-			if (register.getB1().isMouseOver(app.mouseX, app.mouseY)) {
+			if (register.getB1().isHover()) {
 				try {
 					validarContraseñas(register.getPassword().getValue(), register.getCpassword().getValue());
 					if (validarContraseñas(register.getPassword().getValue(), register.getCpassword().getValue())) {
@@ -734,8 +769,8 @@ public class Logica {
 		usuarios = new LinkedList<Usuario>();
 		usuarios.add(new Usuario("master", "12345", "12345", "usuarioMaestro", new Partida("3:50", "50")));
 
-		login = new Login(app);
-		register = new Register(app);
+		login = new Login(app,botones[12]);
+		register = new Register(app,botones[12]);
 		personaje.vidas = 1;
 		ordenarPuntaje = new OrdenarPorPuntaje();
 	}

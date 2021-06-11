@@ -1,10 +1,10 @@
 package modelo;
 import interfascia.GUIController;
 
-import interfascia.IFButton;
 import interfascia.IFLabel;
 import interfascia.IFTextField;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 
 public class Register  {
@@ -14,14 +14,16 @@ public class Register  {
 	private IFTextField password;
 	private IFLabel l,lp,lpp,ln;
 	private PApplet app;
-	private IFButton b1;
+	private Button b1;
 	private IFTextField cpassword;
 	private IFTextField name;
+	private boolean onScreen;
 	
 
 
-	public Register(PApplet app) {
+	public Register(PApplet app, PImage btnRegister) {
 		
+		onScreen= false;
 		c = new GUIController(app);
 		
 		input = new IFTextField("Usuario",app.width/2-50,app.height/2,200 );
@@ -50,50 +52,57 @@ public class Register  {
 		
 		
 		
-		b1 = new IFButton ("Ingresar", app.width/2-50,app.height/2+220, 200, 30);
+		b1 = new Button(app, app.width/2-50,app.height/2+220, 200, 30, 2, "Ingresar", btnRegister );
 		  
 			this.app = app;
 			
-			c.add(input);
-			c.add(l);
-			c.add(password);
-			c.add(lp);
-			c.add(b1);
-			c.add(cpassword);
-			c.add(name);
-			c.add(lpp);
-			c.add(ln);
+
 			
-			b1.addActionListener(this);
 
 		//input.setLookAndFeel(lf);
 		
 	}
 	
+	public void pintar() {
+		b1.pintar();
+	}
+	
 	
 	
 	public void stopVisualization () {
-		c.remove(input);
-		c.remove(l);
-		c.remove(password);
-		c.remove(lp);
-		c.remove(cpassword);
-		c.remove(name);
-		c.remove(lpp);
-		c.remove(ln);
+		try {
+			c.remove(input);
+			c.remove(l);
+			c.remove(password);
+			c.remove(lp);
+			c.remove(cpassword);
+			c.remove(name);
+			c.remove(lpp);
+			c.remove(ln);
+			onScreen = false;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 
 	}
 	
 	public void continueVisualization () {
-		c.add(input);
-		c.add(l);
-		c.add(password);
-		c.add(lp);
-		c.add(b1);
-		c.add(cpassword);
-		c.add(name);
-		c.add(lpp);
-		c.add(ln);
+		try {
+			c.add(input);
+			c.add(l);
+			c.add(password);
+			c.add(lp);
+			c.add(cpassword);
+			c.add(name);
+			c.add(lpp);
+			c.add(ln);
+			onScreen = true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
+
 	}
 
 
@@ -170,13 +179,13 @@ public class Register  {
 
 
 
-	public IFButton getB1() {
+	public Button getB1() {
 		return b1;
 	}
 
 
 
-	public void setB1(IFButton b1) {
+	public void setB1(Button b1) {
 		this.b1 = b1;
 	}
 
@@ -226,6 +235,18 @@ public class Register  {
 
 	public void setLn(IFLabel ln) {
 		this.ln = ln;
+	}
+
+
+
+	public boolean isOnScreen() {
+		return onScreen;
+	}
+
+
+
+	public void setOnScreen(boolean onScreen) {
+		this.onScreen = onScreen;
 	}
 	
 	

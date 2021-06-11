@@ -14,7 +14,7 @@ public class Button {
 	private int tamY;
 	private int tipo;
 	private String textInfo;
-	private PFont font;
+
 	private PImage img;
 
 	public Button(PApplet app, int posX, int posY, int tamX, int tamY, int tipo, String textInfo) {
@@ -27,9 +27,7 @@ public class Button {
 		this.tipo = tipo;
 		this.textInfo = textInfo;
 
-		this.font = this.app.createFont("./font/GorditaMedium.otf", 14);
 
-		this.app.textFont(this.font);
 	}
 	
 	public Button(PApplet app, int posX, int posY, int tamX, int tamY, int tipo, String textInfo, PImage img) {
@@ -42,9 +40,7 @@ public class Button {
 		this.tipo = tipo;
 		this.textInfo = textInfo;
 		this.img = img;
-		this.font = this.app.createFont("./font/GorditaMedium.otf", 14);
 
-		this.app.textFont(this.font);
 	}
 
 	public void pintar() {

@@ -4,24 +4,27 @@ package modelo;
 
 import interfascia.GUIController;
 
-import interfascia.IFButton;
 import interfascia.IFLabel;
 import interfascia.IFTextField;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 
 public class Login  {
+	
 	
 	private GUIController c; 
 	private IFTextField  input;
 	private IFTextField password;
 	private IFLabel l,lp;
 	private PApplet app;
-	private IFButton b1;
+	private Button b1;
+	private boolean onScreen;
 
 
-	public Login(PApplet app) {
+	public Login(PApplet app, PImage btnImage) {
 		
+		onScreen = false;
 		c = new GUIController(app);
 		
 		input = new IFTextField("Usuario",app.width/2-50,app.height/2,200, "Usuario" );
@@ -36,40 +39,52 @@ public class Login  {
 		lp = new IFLabel("Contraseña", app.width/2-50,app.height/2+40);
 		input.addActionListener(app);
 		
-		  b1 = new IFButton ("Ingresar", app.width/2-50,app.height/2+110, 200, 30);
+		  b1 = new Button(app, app.width/2-50, 600, 200, 30, 2, "Ingresar", btnImage) ;
 		  
 			this.app = app;
 			
-			c.add(input);
-			c.add(l);
-			c.add(password);
-			c.add(lp);
-			c.add(b1);
+
 			
-			b1.addActionListener(this);
+			
+			
 
 		//input.setLookAndFeel(lf);
 		
 	}
 	
+	public void pintar() {
+		b1.pintar();
+	}
+	
 	
 	
 	public void stopVisualization () {
-		c.remove(input);
-		c.remove(l);
-		c.remove(password);
-		c.remove(lp);
-		b1.setPosition(-200, -2000);
+		try {
+			c.remove(input);
+			c.remove(l);
+			c.remove(password);
+			c.remove(lp);
+			onScreen = false;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
 		
 
 	}
 	
 	public void continueVisualization () {
-		c.add(input);
-		c.add(l);
-		c.add(password);
-		c.add(lp);
-		c.add(b1);
+		try {
+			c.add(input);
+			c.add(l);
+			c.add(password);
+			c.add(lp);
+			onScreen = true;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 	}
 
 
@@ -146,17 +161,25 @@ public class Login  {
 
 
 
-	public IFButton getB1() {
+	public Button getB1() {
 		return b1;
 	}
 
 
 
-	public void setB1(IFButton b1) {
+	public void setB1(Button b1) {
 		this.b1 = b1;
+	}
+
+	public boolean isOnScreen() {
+		// TODO Auto-generated method stub
+		return onScreen;
 	}
 	
 	
-
+	public void setOnScreen(boolean onScreen) {
+		this.onScreen = onScreen;
+	}
+	
 	
 }
