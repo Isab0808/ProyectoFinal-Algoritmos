@@ -56,7 +56,7 @@ public class Logica {
 
 	public Logica(PApplet app) {
 
-		estado = 5;
+		estado = 0;
 		segundos = 0;
 		minutos = 0;
 		puntaje = 0;
@@ -70,7 +70,7 @@ public class Logica {
 		persona = app.loadImage("Personaje.png");
 
 		pantalla = new PImage[9];
-		pantalla[0] = app.loadImage("PantallaInicio.jpg");
+		pantalla[0] = app.loadImage("pantallainicio.jpg");
 		pantalla[1] = app.loadImage("iniciarSesion.jpeg");
 		pantalla[2] = app.loadImage("PantallaRegistro.jpg");
 		pantalla[3] = app.loadImage("Instrucciones1.jpg");
@@ -736,7 +736,7 @@ public class Logica {
 
 		login = new Login(app);
 		register = new Register(app);
-
+		personaje.vidas = 1;
 		ordenarPuntaje = new OrdenarPorPuntaje();
 	}
 }
