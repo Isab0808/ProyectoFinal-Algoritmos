@@ -565,6 +565,7 @@ public class Logica {
 			// Pantalla Partidas
 			// Si esta el mouse encima del Boton Ok pasar a la pantalla escenario
 			if (app.mouseX > 500 && app.mouseX < 500 + 231 && app.mouseY > 553 && app.mouseY < 553 + 52) {
+				reiniciar(app);
 				estado = 5;
 			}
 		}
@@ -696,53 +697,6 @@ public class Logica {
 		minutos = 0;
 		puntaje = 0;
 
-		muro1 = app.loadImage("Muro1.png");
-		muro2 = app.loadImage("Muro2.png");
-		muro3 = app.loadImage("Muro3.png");
-		muro4 = app.loadImage("Muro4.png");
-		muro5 = app.loadImage("Muro5.png");
-
-		persona = app.loadImage("Personaje.png");
-
-		pantalla = new PImage[9];
-		pantalla[0] = app.loadImage("pantallainicio.jpg");
-		pantalla[1] = app.loadImage("iniciarSesion.jpeg");
-		pantalla[2] = app.loadImage("PantallaRegistro.jpg");
-		pantalla[3] = app.loadImage("Instrucciones1.jpg");
-		pantalla[4] = app.loadImage("Instrucciones2.jpg");
-		pantalla[5] = app.loadImage("PantallaPerdio.jpg");
-		pantalla[6] = app.loadImage("PantallaGano.jpg");
-		pantalla[7] = app.loadImage("PantallaResumen.jpg");
-		pantalla[8] = app.loadImage("PantallaPartidas.jpg");
-
-		nivel = app.loadImage("Nivel1.jpg");
-
-		enemigoI = app.loadImage("Enemigo1.png");
-
-		adornoMatriz = new PImage[5];
-		adornoMatriz[0] = app.loadImage("Arbol.png");
-		adornoMatriz[1] = app.loadImage("Pala.png");
-		adornoMatriz[2] = app.loadImage("Matas.png");
-		adornoMatriz[3] = app.loadImage("Tronco.png");
-		adornoMatriz[4] = app.loadImage("Lago.png");
-
-		botones = new PImage[10];
-		botones[0] = app.loadImage("Boton1.png");
-		botones[1] = app.loadImage("BotonOprimido1.png");
-		botones[2] = app.loadImage("Boton2.png");
-		botones[3] = app.loadImage("BotonOprimido2.png");
-		botones[4] = app.loadImage("BotonPerdio.png");
-		botones[5] = app.loadImage("BotonPerdioOprimido.png");
-		botones[6] = app.loadImage("BotonGano.png");
-		botones[7] = app.loadImage("BotonGanoOprimido.png");
-		botones[8] = app.loadImage("BotonJugar.png");
-		botones[9] = app.loadImage("BotonJugarOprimido.png");
-
-		vida = app.loadImage("Vida.png");
-		cafeG = app.loadImage("Cafe.png");
-
-		vitamina = app.loadImage("Herramienta1.png");
-
 		mapa = new Mapa(muro1, muro2, muro3, muro4, muro5, app);
 		personaje = new Personaje(1, 1, mapa);
 
@@ -766,12 +720,8 @@ public class Logica {
 		listaCafes.add(new Cafe(randomX, randomY));
 		listaCafes.add(new Cafe(5, 1));
 
-		usuarios = new LinkedList<Usuario>();
-		usuarios.add(new Usuario("master", "12345", "12345", "usuarioMaestro", new Partida("3:50", "50")));
 
-		login = new Login(app,botones[12]);
-		register = new Register(app,botones[12]);
 		personaje.vidas = 1;
-		ordenarPuntaje = new OrdenarPorPuntaje();
+	
 	}
 }
