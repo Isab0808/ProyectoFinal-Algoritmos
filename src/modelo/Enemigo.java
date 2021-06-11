@@ -6,14 +6,11 @@ import processing.core.PImage;
 
 public class Enemigo {
 	
+	private int x, y, col, fil, valorDestino, dañoEne, dir, tipoDir;
+	
 	Logica refLogica;
 	Mapa refMapa;
-	int valorDestino, dañoEne, dir;
 	PImage enemigoI;
-
-	
-	int x, y, col, fil, vidas;
-	private int tipoDir;
 
 	public Enemigo(int fil, int col, Mapa refMapa, int tipoDir) {
 		this.col = col;
@@ -48,7 +45,6 @@ public class Enemigo {
 			valorDestino = refMapa.getTipoMapa(fil + 1, col);
 			fil = fil + 1;
 			if (valorDestino == 5) {
-				
 				this.x = 25 + (col * 50);
 				this.y = 25 + (fil * 50)+100;
 			}
@@ -75,7 +71,7 @@ public class Enemigo {
 	}
 	
 	public void tipoDireccion() {
-		// si se hoca no sea boludo cambie de direccion
+		//El cambio de direccion que va a tomar el enemigo
 		switch (tipoDir) {
 		case 0:
 			if(dir==1) {
@@ -100,8 +96,11 @@ public class Enemigo {
 			break;
 		}
 		
+		//Si el valor del destino, es decir, a donde se dirige o esta el enemigo, es un muro distinto de 5
+		//Entonces que su direccion se multiplique por -1, o se movera a la derecha, abajo, a la izquierda
+		//a la derecha segun sea el caso del enemigo
 		if(valorDestino!=5) {
-			dir*=-1; // dir = dir * -1  // - * - = + // +* - = -
+			dir*=-1;
 		}
 	}
 

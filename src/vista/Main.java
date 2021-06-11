@@ -24,11 +24,11 @@ public class Main extends PApplet {
 	public void draw() {
 		background(255);
 
+		control.visualizacionForm();
 		control.pintarPantalla(this);
 	}
 	
 	public void mousePressed() {
-		
 		control.clic(this);
 	}
 	

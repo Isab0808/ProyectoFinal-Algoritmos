@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import exception.NoMoreCoffee;
 import exception.NoSamePasswordException;
 import exception.NoTextInsideException;
 import exception.UsuarioNoExisteException;
@@ -25,7 +24,6 @@ public class Logica {
 	Login login;
 
 	private int estado, segundos, minutos, puntaje, inicio;
-	private boolean win;
 
 	PImage[] pantalla;
 	PImage[] adornoMatriz;
@@ -70,10 +68,15 @@ public class Logica {
 		muro5 = app.loadImage("Muro5.png");
 
 		persona = app.loadImage("Personaje.png");
+		nivel = app.loadImage("Nivel1.jpg");
+		enemigoI = app.loadImage("Enemigo1.png");
+		vida = app.loadImage("Vida.png");
+		cafeG = app.loadImage("Cafe.png");
+		vitamina = app.loadImage("Herramienta1.png");
 
 		pantalla = new PImage[9];
-		pantalla[0] = app.loadImage("pantallainicio.jpg");
-		pantalla[1] = app.loadImage("iniciarSesion.jpeg");
+		pantalla[0] = app.loadImage("PantallaInicio.jpg");
+		pantalla[1] = app.loadImage("PantallaLogin.jpg");
 		pantalla[2] = app.loadImage("PantallaRegistro.jpg");
 		pantalla[3] = app.loadImage("Instrucciones1.jpg");
 		pantalla[4] = app.loadImage("Instrucciones2.jpg");
@@ -82,10 +85,6 @@ public class Logica {
 		pantalla[7] = app.loadImage("PantallaResumen.jpg");
 		pantalla[8] = app.loadImage("PantallaPartidas.jpg");
 
-		nivel = app.loadImage("Nivel1.jpg");
-
-		enemigoI = app.loadImage("Enemigo1.png");
-
 		adornoMatriz = new PImage[5];
 		adornoMatriz[0] = app.loadImage("Arbol.png");
 		adornoMatriz[1] = app.loadImage("Pala.png");
@@ -93,7 +92,7 @@ public class Logica {
 		adornoMatriz[3] = app.loadImage("Tronco.png");
 		adornoMatriz[4] = app.loadImage("Lago.png");
 
-		botones = new PImage[13];
+		botones = new PImage[14];
 		botones[0] = app.loadImage("Boton1.png");
 		botones[1] = app.loadImage("BotonOprimido1.png");
 		botones[2] = app.loadImage("Boton2.png");
@@ -104,22 +103,14 @@ public class Logica {
 		botones[7] = app.loadImage("BotonGanoOprimido.png");
 		botones[8] = app.loadImage("BotonJugar.png");
 		botones[9] = app.loadImage("BotonJugarOprimido.png");
-		botones[10] = app.loadImage("BotonStart.png");
-		botones[11] = app.loadImage("BotonStartOprimido.png");
+		botones[10] = app.loadImage("BotonRegistrarse.png");
+		botones[11] = app.loadImage("BotonIngresar.png");
 		botones[12] = app.loadImage("BotonRegistrate.png");
-
-		vida = app.loadImage("Vida.png");
-		cafeG = app.loadImage("Cafe.png");
-
-		vitamina = app.loadImage("Herramienta1.png");
-
-		mapa = new Mapa(muro1, muro2, muro3, muro4, muro5, app);
-		personaje = new Personaje(1, 1, mapa);
+		botones[13] = app.loadImage("BotonAtras.png");
 
 		enemigos = new ArrayList<>();
 		enemigos.add(new Enemigo(8, 1, mapa, 0));
 		enemigos.add(new Enemigo(10, 5, mapa, 1));
-		enemigos.add(new Enemigo(4, 10, mapa, 0));
 		enemigos.add(new Enemigo(1, 15, mapa, 1));
 		enemigos.add(new Enemigo(1, 20, mapa, 0));
 		enemigos.add(new Enemigo(2, 22, mapa, 0));
@@ -130,25 +121,29 @@ public class Logica {
 		listaHerramienta.add(new Herramienta(1, 17));
 		listaHerramienta.add(new Herramienta(10, 22));
 
-		int randomX = (int) app.random(0, 22);
-		int randomY = (int) app.random(0, 10);
 		listaCafes = new ArrayList<>();
-		listaCafes.add(new Cafe(randomX, randomY));
-		listaCafes.add(new Cafe(5, 1));
+		listaCafes.add(new Cafe(2, 1));
+		listaCafes.add(new Cafe(4, 1));
+		listaCafes.add(new Cafe(6, 1));
+		listaCafes.add(new Cafe(8, 1));
+		listaCafes.add(new Cafe(10, 1));
+		listaCafes.add(new Cafe(4, 2));
+		
+		mapa = new Mapa(muro1, muro2, muro3, muro4, muro5, app);
+		personaje = new Personaje(1, 1, mapa);
 
 		usuarios = new LinkedList<Usuario>();
 		usuarios.add(new Usuario("master", "12345", "12345", "usuarioMaestro", new Partida("3:50", "50")));
 
-		login = new Login(app, botones[12]);
-		register = new Register(app,botones[12]);
+		login = new Login(app, botones[11]);
+		register = new Register(app, botones[10]);
+		btnIniciarSesion = new Button(app, app.width / 2 - 150, 600, 200, 75, 0, "Iniciar Sesión");
+		btnRegistro = new Button(app, app.width / 2 + 150, 600, 200, 75, 0, "Registro");
 
 		ordenarPuntaje = new OrdenarPorPuntaje();
-		btnIniciarSesion = new Button(app, app.width/2-150, 600, 200, 75, 0, "Iniciar Sesión");
-		btnRegistro = new Button(app, app.width/2+150, 600, 200, 75, 0, "Registro");
 	}
 
-	public void pintarPantalla(final PApplet app) throws NoMoreCoffee {
-
+	public void pintarPantalla(final PApplet app)  {
 		switch (estado) {
 
 		// Pantalla inicio
@@ -157,9 +152,7 @@ public class Logica {
 			// Imagen Fondo
 			app.image(pantalla[0], 0, 0);
 
-			// Imagen Boton Start
-			
-			// aqui se agregaron los botones para ir a registro o pantalla
+			// Se pinta tanto el boton para iniciar sesion como para el registro
 			btnIniciarSesion.pintar();
 			btnRegistro.pintar();
 
@@ -168,22 +161,27 @@ public class Logica {
 		// Pantalla Login
 		case 1:
 			app.imageMode(PConstants.CORNER);
-			//Imagen Fondo
+			// Imagen Fondo
 			app.image(pantalla[1], 0, 0);
-			
-			
 
-			//btn pasar
+			// Boton Ingresar
 			login.pintar();
+
+			// Boton Atras
+			app.image(botones[13], 70, 70);
 			break;
 
 		// Pantalla Registro
 		case 2:
 			app.imageMode(PConstants.CORNER);
-			app.image(pantalla[2], 0, 0);
-			
-			//btn pasar
+			// Imagen Fondo
+			app.image(pantalla[1], 0, 0);
+
+			// Boton Registrarse
 			register.pintar();
+
+			// Boton Atras
+			app.image(botones[13], 70, 70);
 			break;
 
 		// Pantalla Instrucciones 1
@@ -218,22 +216,16 @@ public class Logica {
 			}
 			break;
 
-		// Pantalla nivel 1
+		// Pantalla Escenario: Juego
 		case 5:
 			app.imageMode(PConstants.CORNER);
+			// Imagen Fondo
 			app.image(nivel, 0, 0);
 
 			mapa.pintar();
 			personaje.pintar(app, persona);
 
-			// Cuando se recojan todos los cafes se indica que el jugador gano la partida
-			// Es decir la lista de Cafes este en 0
-			if (listaCafes.size() == 0) {
-				estado = 7;
-			}
-
-			// int index, condicion, accion a srguir
-			// tipo de referencia instancio => lista
+			// For para pintar los enemigos
 			for (Enemigo enemigo : enemigos) {
 				enemigo.pintar(app, this.enemigoI);
 				enemigos.indexOf(enemigo);
@@ -279,7 +271,7 @@ public class Logica {
 				if ((personaje.getX() - 25 >= herramientaActual.getX() - 25
 						&& personaje.getX() - 25 <= herramientaActual.getX() - 25 + 50)
 						|| (personaje.getX() - 25 + 50 >= herramientaActual.getX() - 25
-								&& personaje.getX() - 25 + 50 <= herramientaActual.getX() - 9 + 50)) {
+								&& personaje.getX() - 25 + 50 <= herramientaActual.getX() - 25 + 50)) {
 					if ((personaje.getY() - 25 >= herramientaActual.getY() - 25
 							&& personaje.getY() - 25 <= herramientaActual.getY() + 50)
 							|| (personaje.getY() - 25 + persona.height >= herramientaActual.getY() - 25
@@ -292,7 +284,6 @@ public class Logica {
 
 			// For para pintar los cafes y validar la posicion del personaje y el cafe
 			// Si coinciden se suma al puntaje y se elimina de la lista el cafe
-
 			for (int i = 0; i < listaCafes.size(); i++) {
 				listaCafes.get(i).pintar(app, cafeG);
 				Cafe cafeActual = listaCafes.get(i);
@@ -307,19 +298,19 @@ public class Logica {
 						puntaje += 10;
 						listaCafes.remove(i);
 						if (listaCafes.size() == 0) {
-							throw new NoMoreCoffee();
+							estado = 7;
 						}
 					}
 				}
 			}
-
+			
+			
 			// Texto del puntaje
 			app.fill(0);
 			app.textSize(20);
 			app.text(puntaje + " x", 840, 57);
 
 			// For para perder vida cuando los enemigos toquen al personaje principal
-
 			for (final Enemigo e : enemigos) {
 				if ((e.getX() >= personaje.getX() && e.getX() <= personaje.getX() + persona.width)
 						&& (e.getY() >= personaje.getY() && e.getY() <= personaje.getY() + persona.height)) {
@@ -342,7 +333,6 @@ public class Logica {
 			}
 
 			// Perder el juego
-
 			if (personaje.getVidas() <= 0) {
 				estado = 6;
 			}
@@ -387,16 +377,19 @@ public class Logica {
 			// Imagen Fondo
 			app.image(pantalla[7], 0, 0);
 
+			//Pintar el texto de cuanto tiempo se demoro en la partida jugada
 			if (segundos <= 9) {
 				app.text(minutos + ":0" + segundos, 690, 315);
 			} else if (segundos > 9) {
 				app.text(minutos + ":" + segundos, 690, 315);
 			}
 
+			//Pintar el texto de cuanto puntaje saco en la partida jugada
 			app.text(puntaje, 515, 315);
 
 			// Imagen Boton Ok
 			app.image(botones[4], 504, 503);
+			
 			// Imagen Boton Jugar
 			app.image(botones[8], 748, 503);
 
@@ -425,6 +418,9 @@ public class Logica {
 			if (app.mouseX > 500 && app.mouseX < 500 + 231 && app.mouseY > 553 && app.mouseY < 553 + 52) {
 				app.image(botones[5], 500, 553);
 			}
+			
+			//Esto es una excepcion, si ya se hay alguna partida con el usuario pintar los textos de
+			//Nombre, tiempo y puntaje, si no, arrojar la excepcion de que aun no hay resultados
 			try {
 				for (Usuario usuario : usuarios) {
 					app.text(usuario.getNombre(), 587, 300 + (50 * usuarios.indexOf(usuario)));
@@ -436,51 +432,30 @@ public class Logica {
 
 				app.text("No hay resultados", app.width / 2, 300);
 			}
-
 			break;
 		}
 	}
 
 	public void clic(PApplet app) {
-		
-		//aqui se evita q el form aparezca donde quiera
-		if(estado==1) {
-			if(!login.isOnScreen()) {
-				login.continueVisualization();
-			}
-			
-		} else {
-			login.stopVisualization();
-		}
-		
-		if(estado==2) {
-			if(!register.isOnScreen()) {
-				register.continueVisualization();
-			}
-			
-		} else {
-			register.stopVisualization();
-		}
-		
-		//switch de estado
+		// Cambio de pantallas por medio del clic
 		switch (estado) {
 		case 0:
-			//Pantalla Inicio
-		
-			//aqui se le ayude lo que hacen los botones cuando se les hace clic
-			//btn iniciar sesión == estado =2
-			if(btnIniciarSesion.isHover()) {
+			// Pantalla Inicio
+			// Cuando se de clic en el boton Iniciar sesion pasar a la pantalla de Login
+			if (btnIniciarSesion.isHover()) {
 				estado = 1;
 			}
-			if(btnRegistro.isHover()) {
+			// Cuando se de clic en el boton Registro pasar a la pantalla de Registro
+			if (btnRegistro.isHover()) {
 				estado = 2;
 			}
-			// si,necesito ver si funciona la desactivación, y ps tmb
 			break;
-		case 1:
-		//Pantalla Login
 
-			
+		case 1:
+			// Pantalla Login
+			// Cuando se de clic al boton Ingresar validar si ese usuario ya esta registrado
+			// Si el usuario ya esta registrado pasar a la pantalla de instrucciones y parar
+			// la visualizacion del formulario
 			if (login.getB1().isHover()) {
 				try {
 					validarUsuario(login.getInput().getValue(), login.getPassword().getValue());
@@ -488,23 +463,35 @@ public class Logica {
 						estado = 3;
 						login.stopVisualization();
 					}
+					// Si el usuario aun no ha sido registrado mostrar un error o excepcion que diga
+					// que el usuario aun no exite
 				} catch (UsuarioNoExisteException e) {
 					System.out.println(e.getMessage());
 				}
 			}
 
+			// Cuando se le de clic al boton de atras, pasar a la pantalla de inicio
+			if (app.mouseX > 70 && app.mouseX < 70 + 65 && app.mouseY > 70 && app.mouseY < 70 + 78) {
+				estado = 0;
+			}
 			break;
+
 		case 2:
-		//Pantalla Registro
+			// Pantalla Registro
+			// Cuando se de clic al boton Registrarse validar si:
+			
+			// La contraseña digitada es la correcta, es decir confirmar en el otro campo del
+			// formulario, si la contraseña digitada anteriormente coincide con la confirmada
+			
+			//Registrar la informacion digitada dentro de los campos del formulario
 			if (register.getB1().isHover()) {
 				try {
 					validarContraseñas(register.getPassword().getValue(), register.getCpassword().getValue());
 					if (validarContraseñas(register.getPassword().getValue(), register.getCpassword().getValue())) {
-
 						if (validarCamposLlenos(register.getName().getValue(), register.getInput().getValue(),
-								register.getPassword().getValue(), register.getCpassword().getValue())) {
+							register.getPassword().getValue(), register.getCpassword().getValue())) {
 							añadirUsuarios(register.getInput().getValue(), register.getPassword().getValue(),
-									register.getPassword().getValue(), register.getName().getValue());
+							register.getPassword().getValue(), register.getName().getValue());
 							estado = 3;
 							register.stopVisualization();
 						}
@@ -554,7 +541,7 @@ public class Logica {
 				usuarios.get(usuarios.size() - 1).setP(new Partida(minutos + ":" + segundos, puntaje + ""));
 				estado = 9;
 			}
-			// Cuando se le de clic en el boton Jugar pasar a la pantalla de escenario
+			// Cuando se le de clic en el boton Jugar pasar a la pantalla de escenario y reiniciar el juego
 			if (app.mouseX > 748 && app.mouseX < 748 + 231 && app.mouseY > 503 && app.mouseY < 503 + 52) {
 				reiniciar(app);
 				estado = 5;
@@ -563,7 +550,7 @@ public class Logica {
 
 		case 9:
 			// Pantalla Partidas
-			// Si esta el mouse encima del Boton Ok pasar a la pantalla escenario
+			// Si esta el mouse encima del Boton Ok pasar a la pantalla escenario y reiniciar el juego
 			if (app.mouseX > 500 && app.mouseX < 500 + 231 && app.mouseY > 553 && app.mouseY < 553 + 52) {
 				reiniciar(app);
 				estado = 5;
@@ -571,6 +558,8 @@ public class Logica {
 		}
 	}
 
+	//Esto es una excepcion, para validar al usuario, si el usuario ya fue registrado esto arroja un true
+	//Y si no le tira la excepcion, de que aun el usuario no existe
 	public boolean validarUsuario(String user, String password) throws UsuarioNoExisteException {
 		for (Usuario usuario : usuarios) {
 			if (user.equals(usuario.getUsuario()) && password.equals(usuario.getContraseña())) {
@@ -582,6 +571,9 @@ public class Logica {
 		return false;
 	}
 
+	//Esto es una excepcion, para validar las contraseñas, si la contraseña digitada anteriormente coincide 
+	//con la constraseña confirmada entonces es true, y si no que le arroje la excepcion de que
+	//Las contraseñas no coinciden
 	public boolean validarContraseñas(String c1, String c2) throws NoSamePasswordException {
 		boolean estado = false;
 
@@ -594,13 +586,18 @@ public class Logica {
 		return estado;
 	}
 
+	//Para añadir los usuarios del registro
 	public void añadirUsuarios(String usuario, String contraseña, String confirmarContraseña, String nombre) {
 		usuarios.add(new Usuario(usuario, contraseña, confirmarContraseña, nombre, null));
 	}
 
+	//Esto es una excepcion, para validar que todos los campos esten completados 
+	//si no estan todos los campos llenos se arroja la excepcion de que
+	//Llene los campos del formulario
 	public boolean validarCamposLlenos(String name, String user, String password, String cpassword)
 			throws NoTextInsideException {
 		String faltante;
+		//Es un ternario, es como un if else resumido
 		faltante = name.equals("") ? "name" : "";
 		faltante = user.equals("") ? "user" : "";
 		faltante = password.equals("") ? "password" : "";
@@ -619,6 +616,32 @@ public class Logica {
 		return estado;
 	}
 
+	public void visualizacionForm() {
+		// Estos if son para evitar que el formulario aparezca en otras pantallas
+		// Si se esta en la pantalla de login, y el isOnScreen es falso, es decir, si se
+		// ve el formulario, que se vea el formulario
+		if (estado == 1) {
+			if (!login.isOnScreen()) {
+				login.continueVisualization();
+			}
+
+			// Y si no se esta en esta pantalla que pare la visualizacion del formulario
+		} else {
+			login.stopVisualization();
+		}
+
+		// Si se esta en la pantalla de registro, y el isOnScreen es falso, es decir, si
+		// se ve el formulario, que se vea el formulario
+		if (estado == 2) {
+			if (!register.isOnScreen()) {
+				register.continueVisualization();
+			}
+			// Y si no se esta en esta pantalla que pare la visualizacion del formulario
+		} else {
+			register.stopVisualization();
+		}
+	}
+
 	public void ordenarPuntajes(char key) {
 		switch (key) {
 		case 'z':
@@ -627,18 +650,12 @@ public class Logica {
 		case 'x':
 			Collections.sort(usuarios, ordenarPuntaje);
 			break;
-
-		default:
-			break;
 		}
 	}
 
+	//Para poder llamar en el control el movimiento del personaje
 	public Personaje getPersonaje() {
 		return personaje;
-	}
-
-	public void setPersonaje(Personaje personaje) {
-		this.personaje = personaje;
 	}
 
 	// Objetos decorativos que van encima de la matriz
@@ -688,11 +705,16 @@ public class Logica {
 			app.textSize(23);
 			app.text(minutos + ":" + segundos, 141, 60);
 		}
+		//Si el tiempo llega a un minuto el jugador pierde la partida
+		if (minutos == 1) {
+			estado = 6;
+		}
 	}
 
 	public void reiniciar(PApplet app) {
-
-		estado = 5;
+		//Vuelvo todas las variables que inicialice en el constructor
+		//a su estado original
+		estado = 0;
 		segundos = 0;
 		minutos = 0;
 		puntaje = 0;
@@ -703,7 +725,6 @@ public class Logica {
 		enemigos = new ArrayList<>();
 		enemigos.add(new Enemigo(8, 1, mapa, 0));
 		enemigos.add(new Enemigo(10, 5, mapa, 1));
-		enemigos.add(new Enemigo(4, 10, mapa, 0));
 		enemigos.add(new Enemigo(1, 15, mapa, 1));
 		enemigos.add(new Enemigo(1, 20, mapa, 0));
 		enemigos.add(new Enemigo(2, 22, mapa, 0));
@@ -714,14 +735,14 @@ public class Logica {
 		listaHerramienta.add(new Herramienta(1, 17));
 		listaHerramienta.add(new Herramienta(10, 22));
 
-		int randomX = (int) app.random(0, 1200);
-		int randomY = (int) app.random(0, 70);
 		listaCafes = new ArrayList<>();
-		listaCafes.add(new Cafe(randomX, randomY));
-		listaCafes.add(new Cafe(5, 1));
-
+		listaCafes.add(new Cafe(2, 1));
+		listaCafes.add(new Cafe(4, 1));
+		listaCafes.add(new Cafe(6, 1));
+		listaCafes.add(new Cafe(8, 1));
+		listaCafes.add(new Cafe(10, 1));
+		listaCafes.add(new Cafe(4, 2));
 
 		personaje.vidas = 1;
-	
 	}
 }

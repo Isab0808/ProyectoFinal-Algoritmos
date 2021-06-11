@@ -19,8 +19,6 @@ public class Cafe {
 	
 	public void pintar(PApplet app, PImage cafe) {
 		app.image(cafe, x, y);
-		//app.fill(255,255,0);
-		//app.ellipse(x, y, 25, 25);
 	}
 	
 	public int getX() {

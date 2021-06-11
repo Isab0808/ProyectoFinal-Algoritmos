@@ -6,250 +6,192 @@ import interfascia.IFTextField;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-
 public class Register  {
 	
 	private GUIController c; 
-	private IFTextField  input;
+	private IFTextField user;
 	private IFTextField password;
-	private IFLabel l,lp,lpp,ln;
+	private IFLabel textUser,textPassword,textName,textCpassword;
 	private PApplet app;
-	private Button b1;
-	private IFTextField cpassword;
+	private Button botonRegistrarse;
+	private IFTextField cPassword;
 	private IFTextField name;
 	private boolean onScreen;
 	
-
-
 	public Register(PApplet app, PImage btnRegister) {
 		
 		onScreen= false;
+		
+		//Libreria para el formulario
 		c = new GUIController(app);
 		
-		input = new IFTextField("Usuario",app.width/2-50,app.height/2,200 );
-		input.setHeight(25);
+		// Formulario: Registro
+		// Cajon Usuario
+		user = new IFTextField("Usuario",app.width/2- 85,app.height/2-80,200 );
+		user.setHeight(25);
 		
-		password = new IFTextField("Contraseña",app.width/2-50,app.height/2+60,200  );
+		// Texto Cajon Usuario
+		textUser = new IFLabel("Usuario", app.width/2- 85,app.height/2-100);
+		user.addActionListener(app);
+		
+		// Cajon Constraseña
+		password = new IFTextField("Contraseña",app.width/2- 85,app.height/2-20,200);
 		password.setHeight(25);
 		
-		l = new IFLabel("Usuario", app.width/2-50,app.height/2-20);
-		input.addActionListener(app);
-		
-		lp = new IFLabel("Contraseña", app.width/2-50,app.height/2+40);
+		// Texto Cajon Constraseña
+		textPassword = new IFLabel("Contraseña", app.width/2- 85,app.height/2-40);
 		password.addActionListener(app);
 		
-		cpassword = new IFTextField("CContraseña",app.width/2-50,app.height/2+120,200 );
-		cpassword.setHeight(25);
+		// Cajon Confirmar Constraseña
+		cPassword = new IFTextField("CContraseña",app.width/2- 85,app.height/2+40,200 );
+		cPassword.setHeight(25);
 		
-		name = new IFTextField("Nombre",app.width/2-50,app.height/2+180,200);
+		// Texto Cajon Confirmar Contraseña
+		textCpassword = new IFLabel("CContraseña", app.width/2- 85,app.height/2+20);
+		cPassword.addActionListener(app);
+		
+		// Cajon Nombre
+		name = new IFTextField("Nombre",app.width/2- 85,app.height/2+100,200);
 		name.setHeight(25);
 		
-		ln = new IFLabel("CContraseña", app.width/2-50,app.height/2+100);
+		// Texto Cajon Nombre
+		textName = new IFLabel("Nombre", app.width/2-85,app.height/2+80);
 		name.addActionListener(app);
 		
-		lpp = new IFLabel("Nombre", app.width/2-50,app.height/2+160);
-		cpassword.addActionListener(app);
+		// Boton Registrarse
+		botonRegistrarse = new Button(app, app.width/2+10,app.height/2+220, 200, 30, 2, "Registrarse", btnRegister);
 		
-		
-		
-		b1 = new Button(app, app.width/2-50,app.height/2+220, 200, 30, 2, "Ingresar", btnRegister );
-		  
-			this.app = app;
-			
-
-			
-
-		//input.setLookAndFeel(lf);
-		
+		this.app = app;
 	}
 	
 	public void pintar() {
-		b1.pintar();
+		botonRegistrarse.pintar();
 	}
-	
-	
 	
 	public void stopVisualization () {
 		try {
-			c.remove(input);
-			c.remove(l);
+			c.remove(user);
+			c.remove(textUser);
 			c.remove(password);
-			c.remove(lp);
-			c.remove(cpassword);
+			c.remove(textPassword);
+			c.remove(cPassword);
+			c.remove(textCpassword);
 			c.remove(name);
-			c.remove(lpp);
-			c.remove(ln);
+			c.remove(textName);
 			onScreen = false;
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
-
-
 	}
 	
 	public void continueVisualization () {
 		try {
-			c.add(input);
-			c.add(l);
+			c.add(user);
+			c.add(textUser);
 			c.add(password);
-			c.add(lp);
-			c.add(cpassword);
+			c.add(textPassword);
+			c.add(cPassword);
+			c.add(textCpassword);
 			c.add(name);
-			c.add(lpp);
-			c.add(ln);
+			c.add(textName);
 			onScreen = true;
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.println(e.getMessage());
 		}
-
 	}
-
-
 
 	public GUIController getC() {
 		return c;
 	}
 
-
-
 	public void setC(GUIController c) {
 		this.c = c;
 	}
 
-
-
 	public IFTextField getInput() {
-		return input;
+		return user;
 	}
-
-
 
 	public void setInput(IFTextField input) {
-		this.input = input;
+		this.user = input;
 	}
-
-
 
 	public IFTextField getPassword() {
 		return password;
 	}
 
-
-
 	public void setPassword(IFTextField password) {
 		this.password = password;
 	}
 
-
-
 	public IFLabel getL() {
-		return l;
+		return textUser;
 	}
-
-
 
 	public void setL(IFLabel l) {
-		this.l = l;
+		this.textUser = l;
 	}
-
-
 
 	public IFLabel getLp() {
-		return lp;
+		return textPassword;
 	}
-
-
 
 	public void setLp(IFLabel lp) {
-		this.lp = lp;
+		this.textPassword = lp;
 	}
-
-
 
 	public PApplet getApp() {
 		return app;
 	}
 
-
-
 	public void setApp(PApplet app) {
 		this.app = app;
 	}
 
-
-
 	public Button getB1() {
-		return b1;
+		return botonRegistrarse;
 	}
-
-
 
 	public void setB1(Button b1) {
-		this.b1 = b1;
+		this.botonRegistrarse = b1;
 	}
-
-
 
 	public IFTextField getCpassword() {
-		return cpassword;
+		return cPassword;
 	}
-
-
 
 	public void setCpassword(IFTextField cpassword) {
-		this.cpassword = cpassword;
+		this.cPassword = cpassword;
 	}
-
-
 
 	public IFTextField getName() {
 		return name;
 	}
 
-
-
 	public void setName(IFTextField name) {
 		this.name = name;
 	}
 
-
-
 	public IFLabel getLpp() {
-		return lpp;
+		return textName;
 	}
-
-
 
 	public void setLpp(IFLabel lpp) {
-		this.lpp = lpp;
+		this.textName = lpp;
 	}
-
-
 
 	public IFLabel getLn() {
-		return ln;
+		return textCpassword;
 	}
-
-
 
 	public void setLn(IFLabel ln) {
-		this.ln = ln;
+		this.textCpassword = ln;
 	}
-
-
 
 	public boolean isOnScreen() {
 		return onScreen;
 	}
 
-
-
 	public void setOnScreen(boolean onScreen) {
 		this.onScreen = onScreen;
 	}
-	
-	
-
-	
 }

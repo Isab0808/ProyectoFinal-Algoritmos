@@ -52,10 +52,10 @@ public class Button {
 		this.app.noStroke();
 		switch (this.tipo) {
 		case 0:
-			this.app.fill(255, 112, 51);
-			this.app.rect(posX, posY, tamX, tamY);
-			this.app.fill(255);
-			this.app.text(this.textInfo, posX, posY);
+			this.app.fill(252, 242, 208);
+			this.app.rect(posX-50, posY, tamX, tamY,50);
+			this.app.fill(146, 62, 40);
+			this.app.text(this.textInfo, posX-50, posY);
 			break;
 		case 1:
 			this.app.fill(255);
@@ -74,9 +74,9 @@ public class Button {
 			switch (this.tipo) {
 			case 0:
 				this.app.fill(217, 89, 72);
-				this.app.rect(posX, posY, tamX, tamY);
-				this.app.fill(200);
-				this.app.text(this.textInfo, posX, posY);
+				this.app.rect(posX-50, posY, tamX, tamY,50);
+				this.app.fill(255);
+				this.app.text(this.textInfo, posX-50, posY);
 				break;
 			case 1:
 				this.app.fill(200);
