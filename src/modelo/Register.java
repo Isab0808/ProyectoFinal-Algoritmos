@@ -70,14 +70,7 @@ public class Register  {
 	
 	public void stopVisualization () {
 		try {
-			c.remove(user);
-			c.remove(textUser);
-			c.remove(password);
-			c.remove(textPassword);
-			c.remove(cPassword);
-			c.remove(textCpassword);
-			c.remove(name);
-			c.remove(textName);
+			c.setVisible(false);
 			onScreen = false;
 		} catch (Exception e) {
 		}
@@ -85,14 +78,7 @@ public class Register  {
 	
 	public void continueVisualization () {
 		try {
-			c.add(user);
-			c.add(textUser);
-			c.add(password);
-			c.add(textPassword);
-			c.add(cPassword);
-			c.add(textCpassword);
-			c.add(name);
-			c.add(textName);
+			c.setVisible(true);
 			onScreen = true;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
