@@ -23,7 +23,8 @@ public class Logica {
 	Cafe cafe;
 	Login login;
 
-	private int estado, segundos, minutos, puntaje, inicio;
+
+	private int estado, segundos, minutos, puntaje;
 
 	PImage[] pantalla;
 	PImage[] adornoMatriz;
@@ -60,6 +61,8 @@ public class Logica {
 		segundos = 0;
 		minutos = 0;
 		puntaje = 0;
+		
+
 
 		muro1 = app.loadImage("Muro1.png");
 		muro2 = app.loadImage("Muro2.png");
@@ -248,7 +251,8 @@ public class Logica {
 
 			app.imageMode(PConstants.CORNER);
 			pintarAdornos(app);
-
+			
+			app.textAlign(PConstants.BASELINE);
 			temporizador(app);
 
 			// For para pintar las vidas del personaje
@@ -450,6 +454,8 @@ public class Logica {
 			// Cuando se de clic en el boton Iniciar sesion pasar a la pantalla de Login
 			if (btnIniciarSesion.isHover()) {
 				estado = 1;
+				System.out.println(estado);
+				
 			}
 			// Cuando se de clic en el boton Registro pasar a la pantalla de Registro
 			if (btnRegistro.isHover()) {
@@ -467,7 +473,6 @@ public class Logica {
 					validarUsuario(login.getInput().getValue(), login.getPassword().getValue());
 					if (validarUsuario(login.getInput().getValue(), login.getPassword().getValue())) {
 						estado = 3;
-						login.stopVisualization();
 					}
 					// Si el usuario aun no ha sido registrado mostrar un error o excepcion que diga
 					// que el usuario aun no exite
@@ -496,7 +501,6 @@ public class Logica {
 							añadirUsuarios(register.getInput().getValue(), register.getPassword().getValue(),
 									register.getPassword().getValue(), register.getName().getValue());
 							estado = 3;
-							register.stopVisualization();
 						}
 
 					}
@@ -638,26 +642,31 @@ public class Logica {
 		// Estos if son para evitar que el formulario aparezca en otras pantallas
 		// Si se esta en la pantalla de login, y el isOnScreen es falso, es decir, si se
 		// ve el formulario, que se vea el formulario
-		if (estado == 1) {
-			if (!login.isOnScreen()) {
-				login.continueVisualization();
+
+			if (estado == 1) {
+				if (!login.isOnScreen()) {
+					login.continueVisualization();
+				}
+
+				// Y si no se esta en esta pantalla que pare la visualizacion del formulario
+			} else {
+				login.stopVisualization();
 			}
 
-			// Y si no se esta en esta pantalla que pare la visualizacion del formulario
-		} else {
-			login.stopVisualization();
-		}
+		
 
 		// Si se esta en la pantalla de registro, y el isOnScreen es falso, es decir, si
 		// se ve el formulario, que se vea el formulario
-		if (estado == 2) {
-			if (!register.isOnScreen()) {
-				register.continueVisualization();
+			if (estado == 2) {
+				if (!register.isOnScreen()) {
+					register.continueVisualization();
+				}
+				// Y si no se esta en esta pantalla que pare la visualizacion del formulario
+			} else {
+				register.stopVisualization();
 			}
-			// Y si no se esta en esta pantalla que pare la visualizacion del formulario
-		} else {
-			register.stopVisualization();
-		}
+
+		
 	}
 
 	public void ordenarPuntajes(char key) {

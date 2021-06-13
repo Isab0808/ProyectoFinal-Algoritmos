@@ -17,14 +17,19 @@ public class Main extends PApplet {
 	PImage[] pantalla;
 	PImage[] niveles;
 
+
 	public void setup() {
 		control = new Control(this);
+
 	} 
 
 	public void draw() {
 		background(255);
 
-		control.visualizacionForm();
+		
+
+			control.visualizacionForm();
+	
 		control.pintarPantalla(this);
 	}
 	

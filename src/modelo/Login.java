@@ -44,6 +44,11 @@ public class Login {
 		// Boton Ingresar
 		botonIngresar = new Button(app, app.width / 2, 600, 200, 30, 2, "Ingresar", btnImage);
 
+		c.add(user);
+		c.add(textUser);
+		c.add(password);
+		c.add(textPassword);
+		
 		this.app = app;
 	}
 
@@ -54,10 +59,8 @@ public class Login {
 	// Para que se deje de pintar el formulario
 	public void stopVisualization() {
 		try {
-			c.remove(user);
-			c.remove(textUser);
-			c.remove(password);
-			c.remove(textPassword);
+
+			c.setVisible(false);
 			onScreen = false;
 		} catch (Exception e) {
 		}
@@ -66,10 +69,8 @@ public class Login {
 	// Para que se pinte el formulario
 	public void continueVisualization() {
 		try {
-			c.add(user);
-			c.add(textUser);
-			c.add(password);
-			c.add(textPassword);
+
+			c.setVisible(true);
 			onScreen = true;
 		} catch (Exception e) {
 		}
