@@ -59,7 +59,8 @@ public class Login {
 	// Para que se deje de pintar el formulario
 	public void stopVisualization() {
 		try {
-
+			user.setValue("");
+			password.setValue("");
 			c.setVisible(false);
 			onScreen = false;
 		} catch (Exception e) {

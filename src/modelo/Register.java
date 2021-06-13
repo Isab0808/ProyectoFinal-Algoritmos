@@ -70,6 +70,8 @@ public class Register  {
 	
 	public void stopVisualization () {
 		try {
+			user.setValue("");
+			password.setValue("");
 			c.setVisible(false);
 			onScreen = false;
 		} catch (Exception e) {
