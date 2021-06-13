@@ -55,7 +55,7 @@ public class Logica {
 	private Button btnRegistro;
 
 	public Logica(PApplet app) {
-
+		
 		estado = 0;
 		segundos = 0;
 		minutos = 0;
@@ -73,6 +73,8 @@ public class Logica {
 		vida = app.loadImage("Vida.png");
 		cafeG = app.loadImage("Cafe.png");
 		vitamina = app.loadImage("Herramienta1.png");
+		
+		mapa = new Mapa(muro1, muro2, muro3, muro4, muro5, app);
 
 		pantalla = new PImage[9];
 		pantalla[0] = app.loadImage("PantallaInicio.jpg");
@@ -130,7 +132,6 @@ public class Logica {
 		listaCafes.add(new Cafe(10, 1));
 		listaCafes.add(new Cafe(4, 2));
 
-		mapa = new Mapa(muro1, muro2, muro3, muro4, muro5, app);
 		personaje = new Personaje(1, 1, mapa);
 
 		usuarios = new LinkedList<Usuario>();
