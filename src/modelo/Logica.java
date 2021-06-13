@@ -578,10 +578,9 @@ public class Logica {
 		for (Usuario usuario : usuarios) {
 			if (user.equals(usuario.getUsuario()) && password.equals(usuario.getContraseña())) {
 				usuarioTemp = usuario;
-			} else {
-				usuarioTemp = null;
 			}
 		}
+		System.out.println(usuarioTemp.getUsuario());
 		if (usuarioTemp.getUsuario() != null) {
 			return true;
 		} else {
