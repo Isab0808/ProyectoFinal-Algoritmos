@@ -43,7 +43,8 @@ public class Login {
 
 		// Boton Ingresar
 		botonIngresar = new Button(app, app.width / 2, 600, 200, 30, 2, "Ingresar", btnImage);
-
+		
+		// Esto añade los items en el formulario
 		c.add(user);
 		c.add(textUser);
 		c.add(password);
@@ -59,6 +60,7 @@ public class Login {
 	// Para que se deje de pintar el formulario
 	public void stopVisualization() {
 		try {
+			// Cuando un nuevo usuario vuelva a registrarse este volvera a reiniciar, apareciendo los campos en blanco
 			user.setValue("");
 			password.setValue("");
 			c.setVisible(false);

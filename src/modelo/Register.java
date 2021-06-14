@@ -61,23 +61,40 @@ public class Register  {
 		// Boton Registrarse
 		botonRegistrarse = new Button(app, app.width/2+10,app.height/2+220, 200, 30, 2, "Registrarse", btnRegister);
 		
+		// Esto añade los items en el formulario
+		c.add(user);
+		c.add(textUser);
+		c.add(password);
+		c.add(textPassword);
+		c.add(cPassword);
+		c.add(textCpassword);
+		c.add(name);
+		c.add(textName);
+		
 		this.app = app;
 	}
+	
 	
 	public void pintar() {
 		botonRegistrarse.pintar();
 	}
 	
+	// Para que se deje de pintar el formulario
 	public void stopVisualization () {
 		try {
+			
+			// Cuando un nuevo usuario vuelva a registrarse este volvera a reiniciar, apareciendo los campos en blanco
 			user.setValue("");
 			password.setValue("");
+			cPassword.setValue("");
+			name.setValue("");
 			c.setVisible(false);
 			onScreen = false;
 		} catch (Exception e) {
 		}
 	}
 	
+	// Para que se pinte el formulario
 	public void continueVisualization () {
 		try {
 			c.setVisible(true);
