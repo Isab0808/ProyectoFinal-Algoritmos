@@ -57,7 +57,7 @@ public class Logica {
 
 	public Logica(PApplet app) {
 		
-		estado = 0;
+		estado = 5;
 		segundos = 0;
 		minutos = 0;
 		puntaje = 0;
@@ -114,6 +114,52 @@ public class Logica {
 		botones[13] = app.loadImage("BotonSalir.png");
 		botones[14] = app.loadImage("BotonSalirOprimido.png");
 
+		listaCafes = new ArrayList<>();
+		listaCafes.add(new Cafe(2, 1));
+		listaCafes.add(new Cafe(4, 1));
+		listaCafes.add(new Cafe(6, 1));
+		listaCafes.add(new Cafe(8, 1));
+		listaCafes.add(new Cafe(10, 1));
+		listaCafes.add(new Cafe(4, 3));
+		listaCafes.add(new Cafe(2, 3));
+		listaCafes.add(new Cafe(1, 4));
+		listaCafes.add(new Cafe(1, 6));
+		listaCafes.add(new Cafe(2, 7));
+		listaCafes.add(new Cafe(4, 7));
+		listaCafes.add(new Cafe(4, 5));
+		listaCafes.add(new Cafe(6, 5));
+		listaCafes.add(new Cafe(8, 5));
+		listaCafes.add(new Cafe(10, 5));
+		listaCafes.add(new Cafe(10, 3));
+		listaCafes.add(new Cafe(10, 7));
+		listaCafes.add(new Cafe(10, 9));
+		listaCafes.add(new Cafe(9, 10));
+		listaCafes.add(new Cafe(7, 10));
+		listaCafes.add(new Cafe(5, 10));
+		listaCafes.add(new Cafe(4, 11));
+		listaCafes.add(new Cafe(4, 13));
+		listaCafes.add(new Cafe(4, 15));
+		listaCafes.add(new Cafe(4, 17));
+		listaCafes.add(new Cafe(4, 19));
+		listaCafes.add(new Cafe(4, 22));
+		listaCafes.add(new Cafe(2, 15));
+		listaCafes.add(new Cafe(1, 19));
+		listaCafes.add(new Cafe(2, 20));
+		listaCafes.add(new Cafe(2, 22));
+		listaCafes.add(new Cafe(6, 22));
+		listaCafes.add(new Cafe(8, 22));
+		listaCafes.add(new Cafe(10, 20));
+		listaCafes.add(new Cafe(10, 18));
+		listaCafes.add(new Cafe(9, 17));
+		listaCafes.add(new Cafe(8, 18));
+		listaCafes.add(new Cafe(8, 20));
+		listaCafes.add(new Cafe(6, 20));
+		listaCafes.add(new Cafe(5, 21));
+		listaCafes.add(new Cafe(9, 15));
+		listaCafes.add(new Cafe(9, 13));
+		listaCafes.add(new Cafe(7, 15));
+		listaCafes.add(new Cafe(5, 14));
+		
 		enemigos = new ArrayList<>();
 		enemigos.add(new Enemigo(8, 1, mapa, 0));
 		enemigos.add(new Enemigo(10, 5, mapa, 1));
@@ -126,14 +172,6 @@ public class Logica {
 		listaHerramienta.add(new Herramienta(8, 8));
 		listaHerramienta.add(new Herramienta(1, 17));
 		listaHerramienta.add(new Herramienta(10, 22));
-
-		listaCafes = new ArrayList<>();
-		listaCafes.add(new Cafe(2, 1));
-		listaCafes.add(new Cafe(4, 1));
-		listaCafes.add(new Cafe(6, 1));
-		listaCafes.add(new Cafe(8, 1));
-		listaCafes.add(new Cafe(10, 1));
-		listaCafes.add(new Cafe(4, 2));
 
 		personaje = new Personaje(1, 1, mapa);
 
@@ -749,6 +787,52 @@ public class Logica {
 		mapa = new Mapa(muro1, muro2, muro3, muro4, muro5, app);
 		personaje = new Personaje(1, 1, mapa);
 
+		listaCafes = new ArrayList<>();
+		listaCafes.add(new Cafe(2, 1));
+		listaCafes.add(new Cafe(4, 1));
+		listaCafes.add(new Cafe(6, 1));
+		listaCafes.add(new Cafe(8, 1));
+		listaCafes.add(new Cafe(10, 1));
+		listaCafes.add(new Cafe(4, 3));
+		listaCafes.add(new Cafe(2, 3));
+		listaCafes.add(new Cafe(1, 4));
+		listaCafes.add(new Cafe(1, 6));
+		listaCafes.add(new Cafe(2, 7));
+		listaCafes.add(new Cafe(4, 7));
+		listaCafes.add(new Cafe(4, 5));
+		listaCafes.add(new Cafe(6, 5));
+		listaCafes.add(new Cafe(8, 5));
+		listaCafes.add(new Cafe(10, 5));
+		listaCafes.add(new Cafe(10, 3));
+		listaCafes.add(new Cafe(10, 7));
+		listaCafes.add(new Cafe(10, 9));
+		listaCafes.add(new Cafe(9, 10));
+		listaCafes.add(new Cafe(7, 10));
+		listaCafes.add(new Cafe(5, 10));
+		listaCafes.add(new Cafe(4, 11));
+		listaCafes.add(new Cafe(4, 13));
+		listaCafes.add(new Cafe(4, 15));
+		listaCafes.add(new Cafe(4, 17));
+		listaCafes.add(new Cafe(4, 19));
+		listaCafes.add(new Cafe(4, 22));
+		listaCafes.add(new Cafe(2, 15));
+		listaCafes.add(new Cafe(1, 19));
+		listaCafes.add(new Cafe(2, 20));
+		listaCafes.add(new Cafe(2, 22));
+		listaCafes.add(new Cafe(6, 22));
+		listaCafes.add(new Cafe(8, 22));
+		listaCafes.add(new Cafe(10, 20));
+		listaCafes.add(new Cafe(10, 18));
+		listaCafes.add(new Cafe(9, 17));
+		listaCafes.add(new Cafe(8, 18));
+		listaCafes.add(new Cafe(8, 20));
+		listaCafes.add(new Cafe(6, 20));
+		listaCafes.add(new Cafe(5, 21));
+		listaCafes.add(new Cafe(9, 15));
+		listaCafes.add(new Cafe(9, 13));
+		listaCafes.add(new Cafe(7, 15));
+		listaCafes.add(new Cafe(5, 14));
+		
 		enemigos = new ArrayList<>();
 		enemigos.add(new Enemigo(8, 1, mapa, 0));
 		enemigos.add(new Enemigo(10, 5, mapa, 1));
@@ -761,14 +845,6 @@ public class Logica {
 		listaHerramienta.add(new Herramienta(8, 8));
 		listaHerramienta.add(new Herramienta(1, 17));
 		listaHerramienta.add(new Herramienta(10, 22));
-
-		listaCafes = new ArrayList<>();
-		listaCafes.add(new Cafe(2, 1));
-		listaCafes.add(new Cafe(4, 1));
-		listaCafes.add(new Cafe(6, 1));
-		listaCafes.add(new Cafe(8, 1));
-		listaCafes.add(new Cafe(10, 1));
-		listaCafes.add(new Cafe(4, 2));
 
 		personaje.vidas = 1;
 	}
