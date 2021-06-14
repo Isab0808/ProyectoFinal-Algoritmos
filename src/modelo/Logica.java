@@ -57,7 +57,7 @@ public class Logica {
 
 	public Logica(PApplet app) {
 		
-		estado = 5;
+		estado = 0;
 		segundos = 0;
 		minutos = 0;
 		puntaje = 0;
@@ -262,6 +262,28 @@ public class Logica {
 			mapa.pintar();
 			personaje.pintar(app, persona);
 
+			// For para pintar los cafes y validar la posicion del personaje y el cafe
+						// Si coinciden se suma al puntaje y se elimina de la lista el cafe
+						for (int i = 0; i < listaCafes.size(); i++) {
+							listaCafes.get(i).pintar(app, cafeG);
+							Cafe cafeActual = listaCafes.get(i);
+							if ((personaje.getX() - 25 >= cafeActual.getX() - 20
+									&& personaje.getX() - 25 <= cafeActual.getX() - 20 + 50)
+									|| (personaje.getX() - 25 + 50 >= cafeActual.getX() - 20
+											&& personaje.getX() - 25 + 50 <= cafeActual.getX() - 20 + 50)) {
+								if ((personaje.getY() - 25 >= cafeActual.getY() - 25
+										&& personaje.getY() - 25 <= cafeActual.getY() + 50)
+										|| (personaje.getY() - 25 + persona.height >= cafeActual.getY() - 25
+												&& personaje.getY() - 25 + persona.height <= cafeActual.getY() - 25 + 50)) {
+									puntaje += 10;
+									listaCafes.remove(i);
+									if (listaCafes.size() == 0) {
+										estado = 7;
+									}
+								}
+							}
+						}
+			
 			// For para pintar los enemigos
 			for (Enemigo enemigo : enemigos) {
 				enemigo.pintar(app, this.enemigoI);
@@ -320,27 +342,6 @@ public class Logica {
 				}
 			}
 
-			// For para pintar los cafes y validar la posicion del personaje y el cafe
-			// Si coinciden se suma al puntaje y se elimina de la lista el cafe
-			for (int i = 0; i < listaCafes.size(); i++) {
-				listaCafes.get(i).pintar(app, cafeG);
-				Cafe cafeActual = listaCafes.get(i);
-				if ((personaje.getX() - 25 >= cafeActual.getX() - 20
-						&& personaje.getX() - 25 <= cafeActual.getX() - 20 + 50)
-						|| (personaje.getX() - 25 + 50 >= cafeActual.getX() - 20
-								&& personaje.getX() - 25 + 50 <= cafeActual.getX() - 20 + 50)) {
-					if ((personaje.getY() - 25 >= cafeActual.getY() - 25
-							&& personaje.getY() - 25 <= cafeActual.getY() + 50)
-							|| (personaje.getY() - 25 + persona.height >= cafeActual.getY() - 25
-									&& personaje.getY() - 25 + persona.height <= cafeActual.getY() - 25 + 50)) {
-						puntaje += 10;
-						listaCafes.remove(i);
-						if (listaCafes.size() == 0) {
-							estado = 7;
-						}
-					}
-				}
-			}
 
 			// Texto del puntaje
 			app.fill(0);
@@ -355,7 +356,6 @@ public class Logica {
 					new Thread(new Runnable() {
 						@Override
 						public void run() {
-							System.out.println(personaje.vidas + " " + e.getDañoEne());
 							try {
 								if (app.frameCount % 90 == 0) {
 									personaje.quitarVida(e.getDañoEne());
@@ -492,7 +492,6 @@ public class Logica {
 			// Cuando se de clic en el boton Iniciar sesion pasar a la pantalla de Login
 			if (btnIniciarSesion.isHover()) {
 				estado = 1;
-				System.out.println(estado);
 				
 			}
 			// Cuando se de clic en el boton Registro pasar a la pantalla de Registro
@@ -622,7 +621,6 @@ public class Logica {
 				usuarioTemp = usuario;
 			}
 		}
-		System.out.println(usuarioTemp.getUsuario());
 		if (usuarioTemp.getUsuario() != null) {
 			return true;
 		} else {

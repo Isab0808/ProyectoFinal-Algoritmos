@@ -37,12 +37,11 @@ public class Personaje {
 		switch (dir) {
 		case "arriba":
 			valorDestino = refMapa.getTipoMapa(fil - 1, col);
-			if (valorDestino == 5) {
+			if (valorDestino == 5 ) {
 				fil = fil - 1;
 				this.x = 25 + (col * 50);
 				this.y = 25 + (fil * 50)+100;
 			}
-			System.out.println(valorDestino);
 			break;
 
 		case "abajo":
