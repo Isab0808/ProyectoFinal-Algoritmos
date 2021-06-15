@@ -14,8 +14,6 @@ public class Mapa {
 
 	private Cafe cafe;
 
-	Main refMain;
-
 	PImage muro1;
 	PImage muro2;
 	PImage muro3;

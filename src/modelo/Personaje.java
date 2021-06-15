@@ -13,7 +13,6 @@ public class Personaje {
 	Herramienta refHerramientaInventario;
 	PImage persona;
 
-	double tiempoInicial;
 	int x, y, col, fil, vidas;
 
 	public Personaje(int fil, int col, Mapa refMapa) {
@@ -23,8 +22,7 @@ public class Personaje {
 		this.x = 25 + (col * 50);
 		this.y = 25 + (fil * 50) +100;
 		this.refMapa = refMapa;
-
-		tiempoInicial = 0;
+		
 	}
 
 	public void pintar(PApplet app, PImage persona) {
@@ -71,13 +69,6 @@ public class Personaje {
 				this.y = 25 + (fil * 50)+100;
 			}
 			break;
-		}
-	}
-
-	public void tiempo() {
-		double tiempoActual = System.currentTimeMillis();
-		if (tiempoActual - tiempoInicial > 15) {
-			refHerramientaInventario = null;
 		}
 	}
 
